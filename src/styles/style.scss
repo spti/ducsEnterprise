@@ -1,6 +1,11 @@
 $fontSize: 16px;
-$header_height: 32px;
+$headChildMarginV: 10px;
+$headerChildBoxHeight: 32px;
+$headerChildTotalHeight: $headerChildBoxHeight + $headChildMarginV * 2;
+
 html, body {
+  margin: 0px;
+  padding: 0px;
   font-size: $fontSize;
 }
 
@@ -11,32 +16,75 @@ html, body {
 header {
   position: fixed;
   width: 100%;
-  // display: flex;
+
+  /*
+    we have icon, search and menu in the header.
+    Icon and menu will be positioned absolutely, so the menu is
+    the only element in the flow.
+  */
+  display: flex;
+  // justify-content: flex-end;
+
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 header .logo {
-  float: left;
-  // position: absolute;
-  height: $header_height;
-  width: $header_height;
+  // float: left;
+  position: absolute;
+
+  width: $headerChildBoxHeight;
+  height: $headerChildBoxHeight;
+  margin: $headChildMarginV;
+
+  // margin: 0px 10px;
+
   background-image: url(cropped-burns-icon.jpg);
   background-position: center;
   background-size: cover;
 }
 
+header .search-button {
+  position: absolute;
+  // right: 0px;
+
+  width: $headerChildBoxHeight;
+  height: $headerChildBoxHeight;
+  margin: $headChildMarginV;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+header .search-button:hover {
+  width: 150px;
+}
+
+.toggle-menu-button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  width: $headerChildBoxHeight;
+  height: $headerChildBoxHeight;
+  margin: $headChildMarginV;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 header .menu {
-  float: right;
-  width: 50%;
+  // width: 50%;
+  margin: $headChildMarginV 0px;
+  background-color: rgba(0, 0, 0, 0.2);
   // margin: auto 15% auto auto;
   // clear: both;
 }
 
 header .menu span {
-  height: $header_height;
-  line-height: $header_height;
+  // height: $headerChildBoxHeight;
+  line-height: $headerChildBoxHeight;
+  margin: auto 15px;
+
   text-align: center;
   vertical-align: middle;
-  margin: auto 15px;
 }
 
 .half {
@@ -45,12 +93,84 @@ header .menu span {
   background-color: grey;
 }
 
-// @media (max-width: 800px) {
-//   header .menu {
-//     margin: auto 15% auto auto;
-//     // clear: both;
-//   }
-// }
+@media (min-width: 801px) {
+  header .logo {
+    // position: absolute;
+    left: 0px;
+  }
+
+  header .search-button {
+    right: 0px;
+  }
+}
+
+@media (min-width: 1200px) {
+  header {
+    justify-content: flex-end;
+  }
+
+  header .menu {
+    width: 50%;
+  }
+}
+
+@media (max-width: 1199px) {
+  header {
+    justify-content: center;
+  }
+
+  header .menu {
+    width: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    width: 75%;
+    height: 100%;
+
+    // display: flex;
+    justify-content: flex-start;
+  }
+
+  header.animated {
+    transition: transform 500ms linear;
+  }
+
+  header.hidden {
+    transform: translate(-100%);
+  }
+
+  header .logo {
+    // position: absolute;
+    bottom: 0px;
+    right: 0px;
+  }
+
+  header .search-button {
+    right: 0px;
+  }
+
+  header .menu {
+    // width: auto;
+    margin: auto 0px;
+  }
+
+  header .menu span {
+    display: block;
+    text-align: left;
+    // height: $header_height;
+    // line-height: $header_height;
+    // text-align: center;
+    // vertical-align: middle;
+    // margin: auto 15px;
+  }
+  // header .menu {
+  //   margin: auto 15% auto auto;
+  //   // clear: both;
+  // }
+}
+
 //
 // @media (min-width: 801px) {
 //   header .menu {

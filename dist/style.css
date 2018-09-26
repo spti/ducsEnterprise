@@ -1,4 +1,6 @@
 html, body {
+  margin: 0px;
+  padding: 0px;
   font-size: 16px; }
 
 .clear-both {
@@ -6,31 +8,91 @@ html, body {
 
 header {
   position: fixed;
-  width: 100%; }
+  width: 100%;
+  /*
+    we have icon, search and menu in the header.
+    Icon and menu will be positioned absolutely, so the menu is
+    the only element in the flow.
+  */
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2); }
 
 header .logo {
-  float: left;
-  height: 32px;
+  position: absolute;
   width: 32px;
+  height: 32px;
+  margin: 10px;
   background-image: url(cropped-burns-icon.jpg);
   background-position: center;
   background-size: cover; }
 
+header .search-button {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+header .search-button:hover {
+  width: 150px; }
+
+.toggle-menu-button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 32px;
+  height: 32px;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.2); }
+
 header .menu {
-  float: right;
-  width: 50%; }
+  margin: 10px 0px;
+  background-color: rgba(0, 0, 0, 0.2); }
 
 header .menu span {
-  height: 32px;
   line-height: 32px;
+  margin: auto 15px;
   text-align: center;
-  vertical-align: middle;
-  margin: auto 15px; }
+  vertical-align: middle; }
 
 .half {
   width: 50%;
   height: 50px;
   background-color: grey; }
+
+@media (min-width: 801px) {
+  header .logo {
+    left: 0px; }
+  header .search-button {
+    right: 0px; } }
+
+@media (min-width: 1200px) {
+  header {
+    justify-content: flex-end; }
+  header .menu {
+    width: 50%; } }
+
+@media (max-width: 1199px) {
+  header {
+    justify-content: center; }
+  header .menu {
+    width: auto; } }
+
+@media (max-width: 800px) {
+  header {
+    width: 75%;
+    height: 100%;
+    justify-content: flex-start; }
+  header .logo {
+    bottom: 0px;
+    right: 0px; }
+  header .search-button {
+    right: 0px; }
+  header .menu {
+    margin: auto 0px; }
+  header .menu span {
+    display: block;
+    text-align: left; } }
 
 .switcher {
   position: fixed;
