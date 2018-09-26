@@ -6,7 +6,10 @@ var items = [{
 }, {
   innerText: '02',
   sectionId: 'sectionTwo'
+}, {
+  innerText: '03',
+  sectionId: 'sectionThree'
 }];
 
 var container = document.querySelector('#switcher');
-ReactDOM.render(React.createElement(Switcher, { className: 'slider', items: items }), container);
+ReactDOM.render(React.createElement(Switcher, { className: 'slider', visibleItems: 3, items: items }), container);

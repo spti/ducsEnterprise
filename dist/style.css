@@ -1,7 +1,21 @@
-.slider-item {
-  /*
-  width: 50px;
-  height: 50px;
-  */ }
+html, body {
+  font-size: 16px; }
 
-/*# sourceMappingURL=style.css.map */
+.switcher {
+  position: fixed;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  overflow-y: hidden; }
+
+.switcher-highlight {
+  position: relative;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.switcher-item {
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle; }
