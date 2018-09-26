@@ -1,10 +1,7 @@
-#switcher {
+$fontSize: 16px;
 
+html, body {
+  font-size: $fontSize;
 }
 
-.slider-item {
-  /*
-  width: 50px;
-  height: 50px;
-  */
-}
+@import '../components/switcher.scss';

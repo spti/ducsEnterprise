@@ -21,6 +21,14 @@ function SlideSwitcher(props) {
   );
 }
 
+function SwitcherItem(props) {
+  return React.createElement(
+    "div",
+    { className: "switcher-item", "data-id": props.id },
+    props.val
+  );
+}
+
 var Switcher = function (_React$Component) {
   _inherits(Switcher, _React$Component);
 
@@ -44,7 +52,7 @@ var Switcher = function (_React$Component) {
     _this.items = props.items.map(function (item, i) {
       return React.createElement(
         "div",
-        { ref: _this.domRef, className: "switcher-item", "data-sectionid": item.sectionId, key: i },
+        { className: "switcher-item", "data-sectionid": item.sectionId, key: i },
         item.innerText
       );
       // sliderItemEl(item.sectionId, item.innerText, i)
@@ -55,14 +63,26 @@ var Switcher = function (_React$Component) {
 
   _createClass(Switcher, [{
     key: "componentDidMount",
-    value: function componentDidMount(itemId) {
-      // const itemHeight = window.getComputedStyle(this.domRef.querySelector('.switcher-item')).height
-      // this.offset = itemHeight * this.bufferItems
-      var offset = this.items.indexOf(itemId);
+    value: function componentDidMount() {
+      // const item = this.domRef.current.querySelector('.switcher-item')
+
+      // var itemHeight = 0
+      // itemHeight += parseInt(window.getComputedStyle(item).height, 10)
+      // itemHeight += parseInt(window.getComputedStyle(item).marginTop, 10) + parseInt(window.getComputedStyle(item).marginBottom, 10)
+
+      // if (window.getComputedStyle(item).boxSizing === 'content-box') {
+      //   itemHeight += parseInt(window.getComputedStyle(item).paddingTop, 10) + parseInt(window.getComputedStyle(item).paddingBottom, 10)
+      // }
+
+      // var total = this.props.visibleItems * parseInt(itemHeight)
+
+      // this.domRef.current.style.height = this.props.visibleItems * parseInt(itemHeight) + 'px'
+      // this.domRef.current.querySelector('.switcher-highlight').style.height = parseInt(itemHeight) + 'px'
     }
   }, {
     key: "switchTo",
-    value: function switchTo(sectionId) {
+    value: function switchTo(itemId) {
+      var offset = this.items.indexOf(itemId);
       // this.domRef.style.top =
     }
   }, {
@@ -70,11 +90,15 @@ var Switcher = function (_React$Component) {
     value: function render() {
       return React.createElement(
         "div",
-        { className: "switcher" },
+        { ref: this.domRef, className: "switcher" },
         React.createElement(
           "div",
-          { className: "switcher-items" },
-          this.items
+          { className: "switcher-highlight" },
+          React.createElement(
+            "div",
+            { className: "switcher-items" },
+            this.items
+          )
         )
       );
     }
