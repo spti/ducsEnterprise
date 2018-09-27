@@ -48,7 +48,7 @@ header .search-button:hover {
 }
 
 .toggle-menu-button {
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
 
@@ -59,7 +59,7 @@ header .search-button:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-header .menu {
+header nav {
   // width: 50%;
   margin: $headChildMarginV 0px;
   background-color: rgba(0, 0, 0, 0.2);
@@ -67,7 +67,7 @@ header .menu {
   // clear: both;
 }
 
-header .menu span {
+header nav span {
   // height: $headerChildBoxHeight;
   line-height: $headerChildBoxHeight;
   margin: auto 15px;
@@ -92,7 +92,7 @@ header .menu span {
     justify-content: flex-end;
   }
 
-  header .menu {
+  header nav {
     width: 50%;
   }
 }
@@ -102,7 +102,7 @@ header .menu span {
     justify-content: center;
   }
 
-  header .menu {
+  header nav {
     width: auto;
   }
 }
@@ -134,12 +134,12 @@ header .menu span {
     right: 0px;
   }
 
-  header .menu {
+  header nav {
     // width: auto;
     margin: auto 0px;
   }
 
-  header .menu span {
+  header nav span {
     display: block;
     text-align: left;
   }

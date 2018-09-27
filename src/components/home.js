@@ -1,8 +1,9 @@
 import {Header} from './header.js'
+import {Nav} from './nav.js'
 import {Switcher} from './switcher.js'
 // import {Footer} from 'footer.js'
 import {Section} from './section.js'
-import {HeaderLink} from './header-link.js'
+import {NavLink} from './nav-link.js'
 import {Info, Infos} from './info.js'
 
 /*
@@ -217,7 +218,7 @@ class Home extends React.Component {
       </Section>
 
       <Section ref={this.sections.identity} identifier="indentity" visible={true}>
-        {"Logo"}
+        <div class="logo-large">{"Logo"}</div>
       </Section>
 
       <Section ref={this.sections.salesStatus} identifier="salesStatus" visible={true}>
@@ -319,11 +320,18 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header>
-          <HeaderLink text="HOME" url="?page=home#home"/>
-          <HeaderLink text="ABOUT US" url="?page=about"/>
-          <HeaderLink text="NEWS" url="?page=news"/>
-          <HeaderLink text="CONTACT" url="?page=home#contact"/>
+          <div className="logo"></div>
+          <Nav>
+            <NavLink text="HOME" url="?page=home#home"/>
+            <NavLink text="ABOUT US" url="?page=about"/>
+            <NavLink text="NEWS" url="?page=news"/>
+            <NavLink text="CONTACT" url="?page=home#contact"/>
+          </Nav>
+          <div className="search-button"></div>
         </Header>
+
+        <div className="toggle-menu-button"></div>
+
 
         <Switcher ref={this.switcher} className="switcher" items={items}></Switcher>
 

@@ -16,8 +16,25 @@ html, body {
   clear: both;
 }
 
+section:nth-child(1) {
+  margin-top: 0px;
+  padding-top: 150px;
+}
+
 section {
-  padding: 150px 0px;
+  padding: 100px 0px;
+  margin: 100px auto;
+}
+
+#indentity {
+  // padding: 25px;
+}
+
+#indentity .logo-large {
+  width: 350px;
+  height: 350px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 #home, #visitorPropertyEstimations {
@@ -55,5 +72,48 @@ section {
   // float: left;
 }
 
+@media (max-width: 800px) {
+  #home, #visitorPropertyEstimations {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #home .half, #visitorPropertyEstimations .half {
+    // flex-shrink: 0;
+    width: 100%;
+  }
+
+  #home .half:nth-child(1), #visitorPropertyEstimations .half:nth-child(1) {
+    // display: flex;
+  }
+
+  #visitorPropertyEstimations .half:nth-child(2) {
+    // display: flex;
+  }
+
+  #home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
+    width: 75%;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  #salesStatus .infos {
+    // margin: auto;
+    // display: flex;
+    flex-direction: column;
+    // justify-content: center;
+  }
+
+  #salesStatus .infos .info {
+    // max-width: 120px;
+    margin: 25px auto;
+    // flex-shrink: 0;
+
+    // text-align: center;
+    // float: left;
+  }
+}
+
+// @import '../components/nav.scss';
 @import '../components/header.scss';
 @import '../components/switcher.scss';

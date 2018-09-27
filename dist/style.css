@@ -11,8 +11,19 @@ html, body {
 .clear-both {
   clear: both; }
 
+section:nth-child(1) {
+  margin-top: 0px;
+  padding-top: 150px; }
+
 section {
-  padding: 150px 0px; }
+  padding: 100px 0px;
+  margin: 100px auto; }
+
+#indentity .logo-large {
+  width: 350px;
+  height: 350px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.2); }
 
 #home, #visitorPropertyEstimations {
   display: flex; }
@@ -36,6 +47,21 @@ section {
   margin: auto 25px;
   flex-shrink: 0;
   text-align: center; }
+
+@media (max-width: 800px) {
+  #home, #visitorPropertyEstimations {
+    display: flex;
+    flex-direction: column; }
+  #home .half, #visitorPropertyEstimations .half {
+    width: 100%; }
+  #home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
+    width: 75%;
+    max-width: 300px;
+    margin: auto; }
+  #salesStatus .infos {
+    flex-direction: column; }
+  #salesStatus .infos .info {
+    margin: 25px auto; } }
 
 header {
   position: fixed;
@@ -68,7 +94,7 @@ header .search-button:hover {
   width: 150px; }
 
 .toggle-menu-button {
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   width: 32px;
@@ -76,11 +102,11 @@ header .search-button:hover {
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.2); }
 
-header .menu {
+header nav {
   margin: 10px 0px;
   background-color: rgba(0, 0, 0, 0.2); }
 
-header .menu span {
+header nav span {
   line-height: 32px;
   margin: auto 15px;
   text-align: center;
@@ -95,13 +121,13 @@ header .menu span {
 @media (min-width: 1200px) {
   header {
     justify-content: flex-end; }
-  header .menu {
+  header nav {
     width: 50%; } }
 
 @media (max-width: 1199px) {
   header {
     justify-content: center; }
-  header .menu {
+  header nav {
     width: auto; } }
 
 @media (max-width: 800px) {
@@ -118,9 +144,9 @@ header .menu span {
     right: 0px; }
   header .search-button {
     right: 0px; }
-  header .menu {
+  header nav {
     margin: auto 0px; }
-  header .menu span {
+  header nav span {
     display: block;
     text-align: left; } }
 
