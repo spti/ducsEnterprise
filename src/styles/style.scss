@@ -1,7 +1,4 @@
 $fontSize: 16px;
-$headChildMarginV: 10px;
-$headerChildBoxHeight: 32px;
-$headerChildTotalHeight: $headerChildBoxHeight + $headChildMarginV * 2;
 
 html, body {
   margin: 0px;
@@ -9,174 +6,46 @@ html, body {
   font-size: $fontSize;
 }
 
+#switcher {
+  position: fixed;
+  right: 25px;
+  top: 150px;
+}
+
 .clear-both {
   clear: both;
 }
 
-header {
-  position: fixed;
-  width: 100%;
-
-  /*
-    we have icon, search and menu in the header.
-    Icon and menu will be positioned absolutely, so the menu is
-    the only element in the flow.
-  */
-  display: flex;
-  // justify-content: flex-end;
-
-  background-color: rgba(0, 0, 0, 0.2);
+section {
+  padding: 150px 0px;
 }
 
-header .logo {
-  // float: left;
-  position: absolute;
-
-  width: $headerChildBoxHeight;
-  height: $headerChildBoxHeight;
-  margin: $headChildMarginV;
-
-  // margin: 0px 10px;
-
-  background-image: url(cropped-burns-icon.jpg);
-  background-position: center;
-  background-size: cover;
-}
-
-header .search-button {
-  position: absolute;
-  // right: 0px;
-
-  width: $headerChildBoxHeight;
-  height: $headerChildBoxHeight;
-  margin: $headChildMarginV;
-
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-header .search-button:hover {
-  width: 150px;
-}
-
-.toggle-menu-button {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-
-  width: $headerChildBoxHeight;
-  height: $headerChildBoxHeight;
-  margin: $headChildMarginV;
-
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-header .menu {
-  // width: 50%;
-  margin: $headChildMarginV 0px;
-  background-color: rgba(0, 0, 0, 0.2);
-  // margin: auto 15% auto auto;
-  // clear: both;
-}
-
-header .menu span {
-  // height: $headerChildBoxHeight;
-  line-height: $headerChildBoxHeight;
-  margin: auto 15px;
-
-  text-align: center;
-  vertical-align: middle;
-}
-
-.half {
+#home .half, #visitor-property-estimations .half {
   width: 50%;
-  height: 50px;
-  background-color: grey;
 }
 
-@media (min-width: 801px) {
-  header .logo {
-    // position: absolute;
-    left: 0px;
-  }
-
-  header .search-button {
-    right: 0px;
-  }
+#home .half:nth-child(1), #visitor-property-estimations .half:nth-child(1) {
+  // display: flex;
 }
 
-@media (min-width: 1200px) {
-  header {
-    justify-content: flex-end;
-  }
-
-  header .menu {
-    width: 50%;
-  }
+#home .half:nth-child(1) .info, #visitor-property-estimations .half:nth-child(1) .info {
+  width: 75%;
+  max-width: 300px;
+  margin: auto;
 }
 
-@media (max-width: 1199px) {
-  header {
-    justify-content: center;
-  }
-
-  header .menu {
-    width: auto;
-  }
+#sales-status .metrics-container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
-@media (max-width: 800px) {
-  header {
-    width: 75%;
-    height: 100%;
-
-    // display: flex;
-    justify-content: flex-start;
-  }
-
-  header.animated {
-    transition: transform 500ms linear;
-  }
-
-  header.hidden {
-    transform: translate(-100%);
-  }
-
-  header .logo {
-    // position: absolute;
-    bottom: 0px;
-    right: 0px;
-  }
-
-  header .search-button {
-    right: 0px;
-  }
-
-  header .menu {
-    // width: auto;
-    margin: auto 0px;
-  }
-
-  header .menu span {
-    display: block;
-    text-align: left;
-    // height: $header_height;
-    // line-height: $header_height;
-    // text-align: center;
-    // vertical-align: middle;
-    // margin: auto 15px;
-  }
-  // header .menu {
-  //   margin: auto 15% auto auto;
-  //   // clear: both;
-  // }
+#sales-status .metrics-container .metric {
+  max-width: 120px;
+  margin: auto 50px;
+  flex-shrink: 0;
+  // float: left;
 }
 
-//
-// @media (min-width: 801px) {
-//   header .menu {
-//     margin: auto 25% auto auto;
-//     // clear: both;
-//   }
-// }
-
+@import '../components/header.scss';
 @import '../components/switcher.scss';
