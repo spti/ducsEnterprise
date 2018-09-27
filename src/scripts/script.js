@@ -1,8 +1,9 @@
-import {Switcher} from '../components/switcher.js'
+// import {Switcher} from '../components/switcher.js'
+import {HomeWrapper} from '../components/home.js'
 
-function main(data) {
-  const container = document.querySelector('#switcher')
-  ReactDOM.render(<Switcher className="slider" visibleItems={3} items={data.items} />, container)
+function main() {
+  const container = document.querySelector('main')
+  ReactDOM.render(<HomeWrapper />, container) // <Switcher className="slider" visibleItems={3} items={data.items} />
 }
 
 export {main}
