@@ -7,4 +7,16 @@ function Info(props) {
   )
 }
 
-export {Info}
+function Infos(props) {
+  const items = props.items.map((item, i) => {
+    return (<Info heading={item.h} key={i.toString()}>{item.text}</Info>)
+  })
+
+  return (
+    <div className="infos">
+      {items}
+    </div>
+  )
+}
+
+export {Info, Infos}

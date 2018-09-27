@@ -3,7 +3,7 @@ html, body {
   padding: 0px;
   font-size: 16px; }
 
-#switcher {
+.switcher {
   position: fixed;
   right: 25px;
   top: 150px; }
@@ -14,23 +14,28 @@ html, body {
 section {
   padding: 150px 0px; }
 
-#home .half, #visitor-property-estimations .half {
+#home, #visitorPropertyEstimations {
+  display: flex; }
+
+#home .half, #visitorPropertyEstimations .half {
+  flex-shrink: 0;
   width: 50%; }
 
-#home .half:nth-child(1) .info, #visitor-property-estimations .half:nth-child(1) .info {
+#home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
   width: 75%;
   max-width: 300px;
   margin: auto; }
 
-#sales-status .metrics-container {
+#salesStatus .infos {
   margin: auto;
   display: flex;
   justify-content: center; }
 
-#sales-status .metrics-container .metric {
+#salesStatus .infos .info {
   max-width: 120px;
-  margin: auto 50px;
-  flex-shrink: 0; }
+  margin: auto 25px;
+  flex-shrink: 0;
+  text-align: center; }
 
 header {
   position: fixed;

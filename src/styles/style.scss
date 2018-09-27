@@ -6,7 +6,7 @@ html, body {
   font-size: $fontSize;
 }
 
-#switcher {
+.switcher {
   position: fixed;
   right: 25px;
   top: 150px;
@@ -20,30 +20,38 @@ section {
   padding: 150px 0px;
 }
 
-#home .half, #visitor-property-estimations .half {
+#home, #visitorPropertyEstimations {
+  display: flex;
+  // flex-direction:
+}
+
+#home .half, #visitorPropertyEstimations .half {
+  flex-shrink: 0;
   width: 50%;
 }
 
-#home .half:nth-child(1), #visitor-property-estimations .half:nth-child(1) {
+#home .half:nth-child(1), #visitorPropertyEstimations .half:nth-child(1) {
   // display: flex;
 }
 
-#home .half:nth-child(1) .info, #visitor-property-estimations .half:nth-child(1) .info {
+#home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
   width: 75%;
   max-width: 300px;
   margin: auto;
 }
 
-#sales-status .metrics-container {
+#salesStatus .infos {
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
-#sales-status .metrics-container .metric {
+#salesStatus .infos .info {
   max-width: 120px;
-  margin: auto 50px;
+  margin: auto 25px;
   flex-shrink: 0;
+
+  text-align: center;
   // float: left;
 }
 
