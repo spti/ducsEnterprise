@@ -20,21 +20,21 @@ function SwitcherItemDummy(props) {
 
 class Switcher extends React.Component {
   constructor(props) {
-    super()
+    super(props)
 
     // this.refRoot = React.createRef()
     this.items = React.createRef()
 
     const itemsDummyPre = this.props.items.map((item, i) => {
+      const key = "dummy-pre_"+ item.id
       return (
-        const key = "dummy-pre_"+ item.id
         <SwitcherItemDummy val={item.val} key={key}/>
       )
     })
 
     const itemsDummyPost = this.props.items.map((item, i) => {
+      const key = "dummy-post_"+ item.id
       return (
-        const key = "dummy-post_"+ item.id
         <SwitcherItemDummy val={item.val} key={key}/>
       )
     })
