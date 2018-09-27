@@ -3,8 +3,34 @@ html, body {
   padding: 0px;
   font-size: 16px; }
 
+#switcher {
+  position: fixed;
+  right: 25px;
+  top: 150px; }
+
 .clear-both {
   clear: both; }
+
+section {
+  padding: 150px 0px; }
+
+#home .half, #visitor-property-estimations .half {
+  width: 50%; }
+
+#home .half:nth-child(1) .info, #visitor-property-estimations .half:nth-child(1) .info {
+  width: 75%;
+  max-width: 300px;
+  margin: auto; }
+
+#sales-status .metrics-container {
+  margin: auto;
+  display: flex;
+  justify-content: center; }
+
+#sales-status .metrics-container .metric {
+  max-width: 120px;
+  margin: auto 50px;
+  flex-shrink: 0; }
 
 header {
   position: fixed;
@@ -55,11 +81,6 @@ header .menu span {
   text-align: center;
   vertical-align: middle; }
 
-.half {
-  width: 50%;
-  height: 50px;
-  background-color: grey; }
-
 @media (min-width: 801px) {
   header .logo {
     left: 0px; }
@@ -83,6 +104,10 @@ header .menu span {
     width: 75%;
     height: 100%;
     justify-content: flex-start; }
+  header.animated {
+    transition: transform 500ms linear; }
+  header.hidden {
+    transform: translate(-100%); }
   header .logo {
     bottom: 0px;
     right: 0px; }
