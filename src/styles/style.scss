@@ -1,7 +1,51 @@
 $fontSize: 16px;
 
 html, body {
+  margin: 0px;
+  padding: 0px;
   font-size: $fontSize;
 }
 
+#switcher {
+  position: fixed;
+  right: 25px;
+  top: 150px;
+}
+
+.clear-both {
+  clear: both;
+}
+
+section {
+  padding: 150px 0px;
+}
+
+#home .half, #visitor-property-estimations .half {
+  width: 50%;
+}
+
+#home .half:nth-child(1), #visitor-property-estimations .half:nth-child(1) {
+  // display: flex;
+}
+
+#home .half:nth-child(1) .info, #visitor-property-estimations .half:nth-child(1) .info {
+  width: 75%;
+  max-width: 300px;
+  margin: auto;
+}
+
+#sales-status .metrics-container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#sales-status .metrics-container .metric {
+  max-width: 120px;
+  margin: auto 50px;
+  flex-shrink: 0;
+  // float: left;
+}
+
+@import '../components/header.scss';
 @import '../components/switcher.scss';
