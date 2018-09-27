@@ -7,13 +7,13 @@
 
 function SwitcherItem(props) {
   const id = "item_"+ props.identifier
-  return (<div className="switcher-item" id={id} data-id={props.identifier}>
+  return (<div className="switcher-item" id={id} data-identifier={props.identifier}>
     {props.val}
   </div>)
 }
 
 function SwitcherItemDummy(props) {
-  return (<div className="switcher-item">
+  return (<div className="switcher-item" data-identifier={props.identifier}>
     {props.val}
   </div>)
 }
@@ -25,28 +25,46 @@ class Switcher extends React.Component {
     // this.refRoot = React.createRef()
     this.items = React.createRef()
 
-    const itemsDummyPre = this.props.items.map((item, i) => {
-      const key = "dummy-pre_"+ item.id
+    this.state = {
+      items: this.formItemEls(props.items)
+    }
+  }
+
+  setItems(items) {
+    const itemEls = this.formItemEls(items)
+    this.setState({items: itemEls})
+  }
+
+  switchTo(identifier) {
+    // const offset = this.items.indexOf(itemId)
+    // this.domRef.style.top =
+    console.log("switcher items ref", this.items)
+    const offset = this.items.current.querySelector('#item_'+identifier).offsetTop
+    this.items.current.style.top = offset * -1 + "px"
+  }
+
+  formItemEls(items) {
+    const itemsDummyPre = items.map((item, i) => {
+      const key = "dummy-pre_"+ item.identifier
       return (
-        <SwitcherItemDummy val={item.val} key={key}/>
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
       )
     })
 
-    const itemsDummyPost = this.props.items.map((item, i) => {
-      const key = "dummy-post_"+ item.id
+    const itemsDummyPost = items.map((item, i) => {
+      const key = "dummy-post_"+ item.identifier
       return (
-        <SwitcherItemDummy val={item.val} key={key}/>
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
       )
     })
 
-    const itemsReal = this.props.items.map((item, i) => {
+    const itemsReal = items.map((item, i) => {
       return (
-        <SwitcherItem identifier={item.id} key={item.id.toString()} />
+        <SwitcherItem val={item.val} identifier={item.identifier} key={item.identifier.toString()} />
       )
     })
 
-    this.itemEls =
-      itemsDummyPre
+    return itemsDummyPre
       .concat(itemsReal)
       .concat(itemsDummyPost)
 
@@ -55,19 +73,12 @@ class Switcher extends React.Component {
   componentDidMount() {
   }
 
-  switchTo(anId) {
-    // const offset = this.items.indexOf(itemId)
-    // this.domRef.style.top =
-
-    const offset = this.items.current.querySelector('#item_'+anId).offsetTop
-    this.items.current.style.top = offset * -1 + "px"
-  }
-
   render() {
+    console.log('switcher, render')
     return (
       <div className="switcher">
         <div className="switcher-highlight">
-          <div ref={this.items} className="switcher-items">{this.itemEls}</div>
+          <div ref={this.items} className="switcher-items">{this.state.items}</div>
         </div>
       </div>
     )
