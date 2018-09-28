@@ -102,6 +102,7 @@ class Home extends React.Component {
               this.sections.sellWithUsResponse.current.show()
             }
           }}
+          submitVal="Reveal Next Section"
           inputs={[
             {
               tagName: "input",
