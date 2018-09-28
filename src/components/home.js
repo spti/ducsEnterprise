@@ -74,12 +74,14 @@ class Home extends React.Component {
       </Section>
 
       <Section ref={this.sections.wip0} identifier="wip0" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
-        <h1>Work In Progress Here ...</h1>
-        <p>I suppose, this should be a form, which on response reveals the next sections</p>
-        <h2 onClick={() => {
-          this.sections.visitorPropertyEstimations.current.show()
-          this.sections.sellWithUs.current.show()
-        }}>Click Me!</h2>
+        <div className="info">
+          <h1>Work In Progress Here ...</h1>
+          <p>I suppose, this should be a form, which on response reveals the next sections</p>
+          <h2 onClick={() => {
+            this.sections.visitorPropertyEstimations.current.show()
+            this.sections.sellWithUs.current.show()
+          }}>Click Me!</h2>
+        </div>
       </Section>
 
       <Section ref={this.sections.visitorPropertyEstimations} identifier="visitorPropertyEstimations" visible={false} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
@@ -114,14 +116,44 @@ class Home extends React.Component {
       </Section>
 
       <Section ref={this.sections.sellWithUsResponse} identifier="sellWithUsResponse" visible={false} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
-        <h1>We Received:</h1>
-        <span>ducks</span>
+        <div className="info">
+          <h1>We Received:</h1>
+          <span>ducks</span>
+        </div>
       </Section>
 
       <Section ref={this.sections.contactForm} identifier="contactForm" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+      <InputForm
+        submitCb={(xhr) => {
+          console.log('submitCb cb')
+          if (xhr.status == 200) {
+            this.sections.sellWithUsResponse.current.show()
+          }
+        }}
+        inputs={[
+          {
+            tagName: "input",
+            type: "text"
+          },
+          {
+            tagName: "input",
+            type: "text"
+          },
+          {
+            tagName: "input",
+            type: "text"
+          },
+          {
+            tagName: "input",
+            type: "text"
+          },
+        ]}
+        >
+      </InputForm>
       </Section>
 
       <Section ref={this.sections.contactProcess} identifier="contactProcess" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+        <div id="ourProcess"></div>
       </Section>
       </div>
     )
@@ -215,7 +247,7 @@ class App extends React.Component {
             <NavLink text="HOME" url="?page=home#home"/>
             <NavLink text="ABOUT US" url="?page=about"/>
             <NavLink text="NEWS" url="?page=news"/>
-            <NavLink text="CONTACT" url="?page=home#contact"/>
+            <NavLink text="CONTACT" url="?page=home#contactForm"/>
           </Nav>
           <div className="search-button"></div>
         </Header>

@@ -19,6 +19,31 @@ section {
   padding: 100px 0px;
   margin: 100px auto; }
 
+form {
+  max-width: 350px;
+  width: 100%;
+  margin: auto 25px;
+  display: flex;
+  flex-direction: column; }
+
+form input, form textarea, form button {
+  background: none;
+  border: none;
+  margin: 2px 0px; }
+
+form input {
+  height: 35px;
+  background-color: #f2f2f2; }
+
+form textarea {
+  resize: none;
+  height: 250px;
+  background-color: #f2f2f2; }
+
+form button {
+  height: 35px;
+  background-color: #f2f2f2; }
+
 .content-section.noned {
   display: none !important; }
 
@@ -51,6 +76,15 @@ section {
   flex-shrink: 0;
   text-align: center; }
 
+#wip0, #sellWithUs, #sellWithUsResponse, #contactForm, #contactProcess {
+  display: flex;
+  justify-content: center; }
+
+#ourProcess {
+  height: 150px;
+  width: 800px;
+  background-color: rgba(0, 0, 0, 0.2); }
+
 @media (max-width: 800px) {
   #home, #visitorPropertyEstimations {
     display: flex;
@@ -64,7 +98,10 @@ section {
   #salesStatus .infos {
     flex-direction: column; }
   #salesStatus .infos .info {
-    margin: 25px auto; } }
+    margin: 25px auto; }
+  #ourProcess {
+    height: 800px;
+    width: 150px; } }
 
 header {
   position: fixed;
