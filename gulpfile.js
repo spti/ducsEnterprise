@@ -12,3 +12,8 @@ gulp.task('src:sass', () => {
   .pipe(sass())
   .pipe(gulp.dest('dist/'))
 })
+
+gulp.task('src:copy', () => {
+  return gulp.src('./src/*.html')
+  .pipe(gulp.dest('dist/'))
+})

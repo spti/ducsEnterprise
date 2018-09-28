@@ -3,62 +3,83 @@
     @param {string} props.items[n].innerText
     @param {object} props.items[n]. ...
 */
-function SlideSwitcherItems(props) {
 
+
+function SwitcherItem(props) {
+  const id = "item_"+ props.identifier
+  return (<div className="switcher-item" id={id} data-identifier={props.identifier}>
+    {props.val}
+  </div>)
 }
 
-function SlideSwitcher(props) {
-  return (
-    <div>
-      <SlideSwitcherItems className="slider-items" items={props.items} />
-    </div>
-  )
+function SwitcherItemDummy(props) {
+  return (<div className="switcher-item" data-identifier={props.identifier}>
+    {props.val}
+  </div>)
 }
 
 class Switcher extends React.Component {
   constructor(props) {
-    super()
+    super(props)
 
-    if (!(props.containerLength % 2)) {
-      // throw new Error("containerLength must be an odd number")
+    // this.refRoot = React.createRef()
+    this.items = React.createRef()
+
+    this.state = {
+      items: this.formItemEls(props.items)
     }
+  }
 
-    this.domRef = React.createRef()
+  setItems(items) {
+    const itemEls = this.formItemEls(items)
+    this.setState({items: itemEls})
+  }
 
-    const len = (props.containerLength-1) / 2
-    const items =
-      props.items.slice(props.items.length - len)
-      .concat(props.items)
-      .concat(props.items.slice(0, len))
+  switchTo(identifier) {
+    // const offset = this.items.indexOf(itemId)
+    // this.domRef.style.top =
+    // console.log("switcher items ref", this.items)
+    const offset = this.items.current.querySelector('#item_'+identifier).offsetTop
+    this.items.current.style.top = offset * -1 + "px"
+  }
 
-    // const offset = len * supposedItemHeight
-    this.itemsRaw = props.items
-
-    this.items = props.items.map((item, i) => {
+  formItemEls(items) {
+    const itemsDummyPre = items.map((item, i) => {
+      const key = "dummy-pre_"+ item.identifier
       return (
-        <div ref={this.domRef} className="switcher-item" data-sectionid={item.sectionId} key={i}>
-          {item.innerText}
-        </div>
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
       )
-      // sliderItemEl(item.sectionId, item.innerText, i)
     })
 
+    const itemsDummyPost = items.map((item, i) => {
+      const key = "dummy-post_"+ item.identifier
+      return (
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
+      )
+    })
+
+    const itemsReal = items.map((item, i) => {
+      return (
+        <SwitcherItem val={item.val} identifier={item.identifier} key={item.identifier.toString()} />
+      )
+    })
+
+    return itemsDummyPre
+      .concat(itemsReal)
+      .concat(itemsDummyPost)
+
   }
 
-  componentDidMount(itemId) {
-    // const itemHeight = window.getComputedStyle(this.domRef.querySelector('.switcher-item')).height
-    // this.offset = itemHeight * this.bufferItems
-    const offset = this.items.indexOf(itemId)
-  }
-
-  switchTo(sectionId) {
-    // this.domRef.style.top =
+  componentDidMount() {
   }
 
   render() {
+    console.log('switcher, render')
     return (
       <div className="switcher">
-        <div className="switcher-items">{this.items}</div>
+        <div className="switcher-highlight">
+          <div ref={this.items} className="switcher-items">{this.state.items}</div>
+        </div>
       </div>
     )
   }
