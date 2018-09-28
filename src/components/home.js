@@ -1,166 +1,12 @@
 import {Header} from './header.js'
 import {Nav} from './nav.js'
-import {Switcher} from './switcher.js'
-// import {Footer} from 'footer.js'
-import {Section} from './section.js'
 import {NavLink} from './nav-link.js'
+import {InputForm} from './form.js'
+// import {Footer} from 'footer.js'
+import {Switcher} from './switcher.js'
+import {Section} from './section.js'
 import {Info, Infos} from './info.js'
 
-/*
-function Router(url, pages) {
-
-}
-
-class Home extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.metrics = [
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"}
-    ]
-
-    this.refe = React.createRef()
-    // this.home = React.createRef()
-    this.sections = {
-      home: React.createRef(),
-      identity: React.createRef(),
-      salesStatus: React.createRef(),
-      wip0: React.createRef(),
-      visitorPropertyEstimations: React.createRef(),
-      sellWithUs: React.createRef(),
-      sellWithUsResponse: React.createRef(),
-    }
-
-    this.switcher = React.createRef()
-  }
-
-  getVisibleSections() {
-    const sectionsKeys = Object.keys(this.sections)
-    const sectionsVisible = []
-
-    console.log(sectionsKeys)
-    console.log(this.sections)
-    sectionsKeys.forEach(key => {
-      if (this.sections[key].current.isVisible()) {
-        sectionsVisible.push(this.sections[key].current)
-      }
-    })
-
-    console.log(sectionsVisible)
-    return sectionsVisible
-  }
-
-  scrollToSection() {}
-
-  createSwitcherItems() {
-    return this.getVisibleSections().map((section, i) => {
-      return {
-        val: '0'+ i,
-        identifier: section.props.identifier
-      }
-    })
-  }
-
-  updateSwitcher() {
-    this.switcher.props.items = this.createSwitcherItems()
-  }
-
-  componentDidMount() {
-    console.log(this.refe)
-    // this.updateSwitcher()
-  }
-
-  render() {
-    const items = [{
-      val: '01',
-      identifier: 'home'
-    }]
-
-    return (
-      <div ref={this.refe}>
-      <Header>
-        <HeaderLink text="HOME" url="#home"/>
-        <HeaderLink text="ABOUT US" url=""/>
-        <HeaderLink text="NEWS" url=""/>
-        <HeaderLink text="CONTACT" url="#contact"/>
-      </Header>
-
-      <Switcher id="switcher" items={items}></Switcher>
-
-      <Section ref={this.sections.home} identifier="home" visible={true}>
-        <div className="half">
-          <Info heading="Home Heading">
-            {"Home info text body"}
-          </Info>
-        </div>
-        <div className="half">
-
-        </div>
-      </Section>
-
-      <Section ref={this.sections.identity} identifier="indentity" visible={true}>
-        {"Logo"}
-      </Section>
-
-      <Section ref={this.sections.salesStatus} identifier="salesStatus" visible={true}>
-        <Infos items={this.metrics}></Infos>
-      </Section>
-
-      <Section ref={this.sections.wip0} identifier="wip0" visible={true}>
-        <h1>Work In Progress Here ...</h1>
-      </Section>
-
-      <Section ref={this.sections.visitorPropertyEstimations} identifier="visitorPropertyEstimations" visible={false}>
-        <div className="half">
-          <Info heading="Based on Info You Provided">
-            <p>we found that your property is worth <span>{"$5 - $6"}M range</span> and there are {"25"} buyers</p>
-          </Info>
-        </div>
-        <div className="half"></div>
-      </Section>
-
-      <Section ref={this.sections.sellWithUs} identifier="sellWithUs" visible={false}>
-
-      </Section>
-
-      <Section ref={this.sections.sellWithUsResponse} identifier="sellWithUsResponse" visible={false}>
-
-      </Section>
-
-      <Section ref={this.sections.contactForm} identifier="contactForm" visible={true}>
-      </Section>
-
-      <Section ref={this.sections.contactProcess} identifier="contactProcess" visible={true}>
-      </Section>
-      </div>
-    )
-  }
-}
-
-class HomeWrapper extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.home = React.createRef()
-  }
-
-  componentDidMount() {
-    console.log(this.home)
-    console.log(this.home.current.getVisibleSections.call(this.home.current))
-  }
-
-  render() {
-    return (
-      <Home ref={this.home} />
-    )
-  }
-}
-
-*/
-
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -173,13 +19,15 @@ class Home extends React.Component {
       visitorPropertyEstimations: React.createRef(),
       sellWithUs: React.createRef(),
       sellWithUsResponse: React.createRef(),
+      contactForm: React.createRef(),
+      contactProcess: React.createRef(),
     }
 
-    this.metrics = [
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"},
-      {h: "5500", text: "two lines of text"}
+    this.salesStatusMetrics = [
+      {h: "55000", text: 'two lines of text'},
+      {h: "55000", text: 'two lines of text'},
+      {h: "55000", text: 'two lines of text'},
+      {h: "55000", text: 'two lines of text'},
     ]
   }
 
@@ -206,7 +54,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="page">
-      <Section ref={this.sections.home} identifier="home" visible={true}>
+      <Section ref={this.sections.home} identifier="home" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
         <div className="half">
           <Info className="info" heading="Home Heading">
             {"Home info text body"}
@@ -217,39 +65,63 @@ class Home extends React.Component {
         </div>
       </Section>
 
-      <Section ref={this.sections.identity} identifier="indentity" visible={true}>
-        <div class="logo-large">{"Logo"}</div>
+      <Section ref={this.sections.identity} identifier="identity" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+        <div className="logo-large">{"Logo"}</div>
       </Section>
 
-      <Section ref={this.sections.salesStatus} identifier="salesStatus" visible={true}>
-        <Infos items={this.metrics}></Infos>
+      <Section ref={this.sections.salesStatus} identifier="salesStatus" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+        <Infos items={this.salesStatusMetrics}></Infos>
       </Section>
 
-      <Section ref={this.sections.wip0} identifier="wip0" visible={true}>
+      <Section ref={this.sections.wip0} identifier="wip0" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
         <h1>Work In Progress Here ...</h1>
+        <p>I suppose, this should be a form, which on response reveals the next sections</p>
+        <h2 onClick={() => {
+          this.sections.visitorPropertyEstimations.current.show()
+          this.sections.sellWithUs.current.show()
+        }}>Click Me!</h2>
       </Section>
 
-      <Section ref={this.sections.visitorPropertyEstimations} identifier="visitorPropertyEstimations" visible={false}>
+      <Section ref={this.sections.visitorPropertyEstimations} identifier="visitorPropertyEstimations" visible={false} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
         <div className="half">
           <Info className="info" heading="Based on Info You Provided">
-            <p>we found that your property is worth <span>{"$5 - $6"}M range</span> and there are {"25"} buyers</p>
+            <p>we found that your ducks is worth <span>{"$5 - $6"}M range</span> and there are {"25"} buyers</p>
           </Info>
         </div>
         <div className="half"></div>
       </Section>
 
-      <Section ref={this.sections.sellWithUs} identifier="sellWithUs" visible={false}>
-
+      <Section ref={this.sections.sellWithUs} identifier="sellWithUs" visible={false} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+        <InputForm
+          submitCb={(xhr) => {
+            console.log('submitCb cb')
+            if (xhr.status == 200) {
+              this.sections.sellWithUsResponse.current.show()
+            }
+          }}
+          inputs={[
+            {
+              tagName: "input",
+              type: "text"
+            },
+            {
+              tagName: "textarea",
+              type: "text"
+            },
+          ]}
+          >
+        </InputForm>
       </Section>
 
-      <Section ref={this.sections.sellWithUsResponse} identifier="sellWithUsResponse" visible={false}>
-
+      <Section ref={this.sections.sellWithUsResponse} identifier="sellWithUsResponse" visible={false} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
+        <h1>We Received:</h1>
+        <span>ducks</span>
       </Section>
 
-      <Section ref={this.sections.contactForm} identifier="contactForm" visible={true}>
+      <Section ref={this.sections.contactForm} identifier="contactForm" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
       </Section>
 
-      <Section ref={this.sections.contactProcess} identifier="contactProcess" visible={true}>
+      <Section ref={this.sections.contactProcess} identifier="contactProcess" visible={true} inViewCb={this.props.onSectionEnterCb} onToggleVisib={this.props.onToggleSectionVisibility}>
       </Section>
       </div>
     )
@@ -280,6 +152,18 @@ class App extends React.Component {
   updateSwitcher() {
     console.log("items", this.createSwitcherItems())
     this.switcher.current.setItems(this.createSwitcherItems())
+    window.setTimeout(() => {
+      this.switcher.current.switchTo(this.sectionCurrentId)
+    }, 30)
+  }
+
+  sectionEnterCb(sectionId) {
+    this.switcher.current.switchTo(sectionId)
+    this.sectionCurrentId = sectionId
+  }
+
+  testToggleSection() {
+    this.home.current.sections.visitorPropertyEstimations.current.show()
   }
 
   /*
@@ -307,7 +191,13 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("app", this)
+    this.sectionCurrentId = 'home'
     this.updateSwitcher()
+    window.setTimeout(() => {
+      this.switcher.current.switchTo('home')
+    }, 250)
+
+
     // this.switcher.current.switchTo("identity")
   }
 
@@ -319,7 +209,7 @@ class App extends React.Component {
 
     return (
       <div className="app">
-        <Header>
+        <Header clickCb={this.testToggleSection.bind(this)}>
           <div className="logo"></div>
           <Nav>
             <NavLink text="HOME" url="?page=home#home"/>
@@ -335,7 +225,7 @@ class App extends React.Component {
 
         <Switcher ref={this.switcher} className="switcher" items={items}></Switcher>
 
-        <Home ref={this.home} onToggleSectionVisibility={this.updateSwitcher.bind(this)} />
+        <Home ref={this.home} onToggleSectionVisibility={this.updateSwitcher.bind(this)} onSectionEnterCb={this.sectionEnterCb.bind(this)} />
       </div>
     )
   }

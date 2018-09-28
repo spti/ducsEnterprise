@@ -38,7 +38,7 @@ class Switcher extends React.Component {
   switchTo(identifier) {
     // const offset = this.items.indexOf(itemId)
     // this.domRef.style.top =
-    console.log("switcher items ref", this.items)
+    // console.log("switcher items ref", this.items)
     const offset = this.items.current.querySelector('#item_'+identifier).offsetTop
     this.items.current.style.top = offset * -1 + "px"
   }

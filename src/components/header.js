@@ -1,6 +1,6 @@
 function Header(props) {
   return (
-    <header>
+    <header onClick={props.clickCb}>
       {props.children}
     </header>
   )

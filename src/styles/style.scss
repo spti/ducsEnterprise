@@ -26,11 +26,15 @@ section {
   margin: 100px auto;
 }
 
+.content-section.noned {
+  display: none !important;
+}
+
 #indentity {
   // padding: 25px;
 }
 
-#indentity .logo-large {
+#identity .logo-large {
   width: 350px;
   height: 350px;
   margin: auto;
