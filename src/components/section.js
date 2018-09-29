@@ -14,6 +14,12 @@ function getViewportWidth() {
 }
 
 class Section extends React.Component {
+  /**
+    @param {string} identifier
+    @param {boolean} visible
+    @param {function} inViewCb
+    @param {function} onToggleVisib
+  */
   constructor(props) {
     super(props)
 
@@ -80,7 +86,10 @@ class Section extends React.Component {
     const className = (this.visible) ? 'content-section' : 'content-section noned'
 
     return (
-      <section ref={this.dom} className={className} id={this.props.identifier}>
+      <section
+        ref={this.dom}
+        id={this.props.identifier}
+        className={className} >
         {this.props.children}
       </section>
     )
