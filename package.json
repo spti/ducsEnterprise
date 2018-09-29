@@ -10,7 +10,10 @@
     "type": "git",
     "url": "/"
   },
-  "author": "mobiDone",
+  "scripts": {
+    "build": "webpack --config webpack.config.js && gulp build"
+  },
+  "author": "spti",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",

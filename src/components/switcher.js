@@ -7,13 +7,13 @@
 
 function SwitcherItem(props) {
   const id = "item_"+ props.identifier
-  return (<div className="switcher-item" id={id} data-identifier={props.identifier}>
+  return (<div className="switcher-item" id={id} data-identifier={props.identifier} onClick={props.clickCb}>
     {props.val}
   </div>)
 }
 
 function SwitcherItemDummy(props) {
-  return (<div className="switcher-item" data-identifier={props.identifier}>
+  return (<div className="switcher-item" data-identifier={props.identifier} onClick={props.clickCb}>
     {props.val}
   </div>)
 }
@@ -43,24 +43,30 @@ class Switcher extends React.Component {
     this.items.current.style.top = offset * -1 + "px"
   }
 
+  clickCb(ev) {
+    const id = ev.target.dataset.identifier
+    this.switchTo(id)
+    window.location.hash = id
+  }
+
   formItemEls(items) {
     const itemsDummyPre = items.map((item, i) => {
       const key = "dummy-pre_"+ item.identifier
       return (
-        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={key}/>
       )
     })
 
     const itemsDummyPost = items.map((item, i) => {
       const key = "dummy-post_"+ item.identifier
       return (
-        <SwitcherItemDummy val={item.val} identifier={item.identifier} key={key}/>
+        <SwitcherItemDummy val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={key}/>
       )
     })
 
     const itemsReal = items.map((item, i) => {
       return (
-        <SwitcherItem val={item.val} identifier={item.identifier} key={item.identifier.toString()} />
+        <SwitcherItem val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={item.identifier.toString()} />
       )
     })
 

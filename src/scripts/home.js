@@ -1,11 +1,11 @@
-import {Header} from './header.js'
-import {Nav} from './nav.js'
-import {NavLink} from './nav-link.js'
-import {InputForm} from './form.js'
+import {Header} from '../components/header.js'
+import {Nav} from '../components/nav.js'
+import {NavLink} from '../components/nav-link.js'
+import {InputForm} from '../components/form.js'
 // import {Footer} from 'footer.js'
-import {Switcher} from './switcher.js'
-import {Section} from './section.js'
-import {Info, Infos} from './info.js'
+import {Switcher} from '../components/switcher.js'
+import {Section} from '../components/section.js'
+import {Info, Infos} from '../components/info.js'
 
 class Home extends React.Component {
   constructor(props) {
@@ -23,6 +23,7 @@ class Home extends React.Component {
       contactProcess: React.createRef(),
     }
 
+    // some content data
     this.salesStatusMetrics = [
       {h: "55000", text: 'two lines of text'},
       {h: "55000", text: 'two lines of text'},
@@ -101,6 +102,7 @@ class Home extends React.Component {
               this.sections.sellWithUsResponse.current.show()
             }
           }}
+          submitVal="Reveal Next Section"
           inputs={[
             {
               tagName: "input",
