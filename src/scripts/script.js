@@ -1,5 +1,5 @@
 // import {Switcher} from '../components/switcher.js'
-import {App} from '../components/home.js'
+import {App} from './home.js'
 
 function main() {
   const container = document.querySelector('main')
