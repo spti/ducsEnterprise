@@ -6,14 +6,14 @@
 
 
 function SwitcherItem(props) {
-  const id = "item_"+ props.identifier
-  return (<div className="switcher-item" id={id} data-identifier={props.identifier} onClick={props.clickCb}>
+  const id = "item_"+ props.sectionid
+  return (<div className="switcher-item" id={id} data-sectionid={props.sectionid} onClick={props.clickCb}>
     {props.val}
   </div>)
 }
 
 function SwitcherItemDummy(props) {
-  return (<div className="switcher-item" data-identifier={props.identifier} onClick={props.clickCb}>
+  return (<div className="switcher-item" data-sectionid={props.sectionid} onClick={props.clickCb}>
     {props.val}
   </div>)
 }
@@ -28,6 +28,8 @@ class Switcher extends React.Component {
     this.state = {
       items: this.formItemEls(props.items)
     }
+
+    // this.clickUserCb = this.props.clickCb
   }
 
   setItems(items) {
@@ -44,29 +46,28 @@ class Switcher extends React.Component {
   }
 
   clickCb(ev) {
-    const id = ev.target.dataset.identifier
-    this.switchTo(id)
-    window.location.hash = id
+    const id = ev.target.dataset.sectionid
+    this.props.clickCb(id, ev)
   }
 
   formItemEls(items) {
     const itemsDummyPre = items.map((item, i) => {
-      const key = "dummy-pre_"+ item.identifier
+      const key = "dummy-pre_"+ item.sectionid
       return (
-        <SwitcherItemDummy val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={key}/>
+        <SwitcherItemDummy val={item.val} sectionid={item.sectionid} clickCb={this.clickCb.bind(this)} key={key}/>
       )
     })
 
     const itemsDummyPost = items.map((item, i) => {
-      const key = "dummy-post_"+ item.identifier
+      const key = "dummy-post_"+ item.sectionid
       return (
-        <SwitcherItemDummy val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={key}/>
+        <SwitcherItemDummy val={item.val} sectionid={item.sectionid} clickCb={this.clickCb.bind(this)} key={key}/>
       )
     })
 
     const itemsReal = items.map((item, i) => {
       return (
-        <SwitcherItem val={item.val} identifier={item.identifier} clickCb={this.clickCb.bind(this)} key={item.identifier.toString()} />
+        <SwitcherItem val={item.val} sectionid={item.sectionid} clickCb={this.clickCb.bind(this)} key={item.sectionid.toString()} />
       )
     })
 

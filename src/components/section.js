@@ -15,7 +15,7 @@ function getViewportWidth() {
 
 class Section extends React.Component {
   /**
-    @param {string} identifier
+    @param {string} id
     @param {boolean} visible
     @param {function} inViewCb
     @param {function} onToggleVisib
@@ -41,7 +41,7 @@ class Section extends React.Component {
       const inView = this.isInView()
       if (this.inViewPrev != inView) {
         if (inView)
-          this.props.inViewCb(this.props.identifier)
+          this.props.inViewCb(this.props.id)
       }
     })
 
@@ -53,13 +53,13 @@ class Section extends React.Component {
   show() {
     this.dom.current.classList.remove("noned")
     this.visible = true
-    this.props.onToggleVisib(this.props.identifier)
+    this.props.onToggleVisib(this.props.id)
   }
 
   hide() {
     this.dom.current.classList.add("noned")
     this.visible = false
-    this.props.onToggleVisib(this.props.identifier)
+    this.props.onToggleVisib(this.props.id)
   }
 
   isInView() {
@@ -88,7 +88,7 @@ class Section extends React.Component {
     return (
       <section
         ref={this.dom}
-        id={this.props.identifier}
+        id={this.props.id}
         className={className} >
         {this.props.children}
       </section>

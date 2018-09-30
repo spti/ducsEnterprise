@@ -14,11 +14,15 @@ class App extends React.Component {
       this.pages[page.id] = React.createRef()
 
       page.sections = page.sections.map((section) => {
-        return (ref, sections) => {
-          return section(ref, sections, {
-            onToggleVisib: this.sectionToggleVisibilityCb.bind(this),
-            inViewCb: this.sectionEnterCb.bind(this),
-          })
+
+        return {
+          id: section.id,
+          content: (ref, sections) => {
+            return section.content(ref, sections, {
+              onToggleVisib: this.sectionToggleVisibilityCb.bind(this),
+              inViewCb: this.sectionEnterCb.bind(this),
+            })
+          }
         }
       })
 
@@ -32,7 +36,7 @@ class App extends React.Component {
     return page.current.getVisibleSections().map((section, i) => {
       return {
         val: '0'+ (i+1),
-        identifier: section.current.props.identifier
+        sectionid: section.current.props.id
       }
     })
   }
@@ -41,8 +45,14 @@ class App extends React.Component {
     console.log("items", this.createSwitcherItems(page))
     this.switcher.current.setItems(this.createSwitcherItems(page))
     window.setTimeout(() => {
+      console.log(this.sectionCurrentId)
       this.switcher.current.switchTo(this.sectionCurrentId)
     }, 30)
+  }
+
+  switcherItemClickCb(sectionId, ev) {
+    this.switcher.current.switchTo(sectionId)
+    window.location.hash = sectionId
   }
 
   sectionEnterCb(sectionId) {
@@ -55,7 +65,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.sectionCurrentId = this.pages.home.current.sections[0].ref.current.props.identifier
+    this.sectionCurrentId = this.pages.home.current.sections['home'].current.props.id
     this.updateSwitcher(this.pages.home)
 
   }
@@ -63,7 +73,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <Switcher ref={this.switcher} className="switcher" items={[{val: '01', identifier: 'home'}]}></Switcher>
+        <Switcher ref={this.switcher}
+        className="switcher"
+        clickCb={this.switcherItemClickCb.bind(this)}
+        items={[{val: '01', sectionid: 'home'}]}></Switcher>
         <div className="pages">
           {this.pagesData.map((page) => {
             return (
