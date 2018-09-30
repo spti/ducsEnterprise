@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 /**
   @param {array} props.items array of items, each of the format:
     @param {string} props.items[n].innerText
@@ -28,6 +31,8 @@ class Switcher extends React.Component {
     this.state = {
       items: this.formItemEls(props.items)
     }
+
+    // this.clickUserCb = this.props.clickCb
   }
 
   setItems(items) {
@@ -45,8 +50,7 @@ class Switcher extends React.Component {
 
   clickCb(ev) {
     const id = ev.target.dataset.identifier
-    this.switchTo(id)
-    window.location.hash = id
+    this.props.clickCb(id, ev)
   }
 
   formItemEls(items) {

@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 function getViewportHeight() {
   return window.innerHeight && document.documentElement.clientHeight ?
     Math.min(window.innerHeight, document.documentElement.clientHeight) :
@@ -14,6 +17,12 @@ function getViewportWidth() {
 }
 
 class Section extends React.Component {
+  /**
+    @param {string} id
+    @param {boolean} visible
+    @param {function} inViewCb
+    @param {function} onToggleVisib
+  */
   constructor(props) {
     super(props)
 
@@ -35,7 +44,7 @@ class Section extends React.Component {
       const inView = this.isInView()
       if (this.inViewPrev != inView) {
         if (inView)
-          this.props.inViewCb(this.props.identifier)
+          this.props.inViewCb(this.props.id)
       }
     })
 
@@ -47,13 +56,13 @@ class Section extends React.Component {
   show() {
     this.dom.current.classList.remove("noned")
     this.visible = true
-    this.props.onToggleVisib(this.props.identifier)
+    this.props.onToggleVisib(this.props.id)
   }
 
   hide() {
     this.dom.current.classList.add("noned")
     this.visible = false
-    this.props.onToggleVisib(this.props.identifier)
+    this.props.onToggleVisib(this.props.id)
   }
 
   isInView() {
@@ -80,7 +89,10 @@ class Section extends React.Component {
     const className = (this.visible) ? 'content-section' : 'content-section noned'
 
     return (
-      <section ref={this.dom} className={className} id={this.props.identifier}>
+      <section
+        ref={this.dom}
+        id={this.props.id}
+        className={className} >
         {this.props.children}
       </section>
     )

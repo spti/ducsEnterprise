@@ -56,30 +56,30 @@ form button {
   margin: auto;
   background-color: rgba(0, 0, 0, 0.2); }
 
-#home, #visitorPropertyEstimations {
+#home, #form1-res {
   display: flex; }
 
-#home .half, #visitorPropertyEstimations .half {
+#home .half, #form1-res .half {
   flex-shrink: 0;
   width: 50%; }
 
-#home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
+#home .half:nth-child(1) .info, #form1-res .half:nth-child(1) .info {
   width: 75%;
   max-width: 300px;
   margin: auto; }
 
-#salesStatus .infos {
+#customers-sales .infos {
   margin: auto;
   display: flex;
   justify-content: center; }
 
-#salesStatus .infos .info {
+#customers-sales .infos .info {
   max-width: 120px;
   margin: auto 25px;
   flex-shrink: 0;
   text-align: center; }
 
-#wip0, #sellWithUs, #sellWithUsResponse, #contactForm, #contactProcess {
+#form1, #form2, #form2-res, #contact-form, #contact-process {
   display: flex;
   justify-content: center; }
 
@@ -89,18 +89,18 @@ form button {
   background-color: rgba(0, 0, 0, 0.2); }
 
 @media (max-width: 800px) {
-  #home, #visitorPropertyEstimations {
+  #home, #form1-res {
     display: flex;
     flex-direction: column; }
-  #home .half, #visitorPropertyEstimations .half {
+  #home .half, #form1-res .half {
     width: 100%; }
-  #home .half:nth-child(1) .info, #visitorPropertyEstimations .half:nth-child(1) .info {
+  #home .half:nth-child(1) .info, #form1-res .half:nth-child(1) .info {
     width: 75%;
     max-width: 300px;
     margin: auto; }
-  #salesStatus .infos {
+  #customers-sales .infos {
     flex-direction: column; }
-  #salesStatus .infos .info {
+  #customers-sales .infos .info {
     margin: 25px auto; }
   #ourProcess {
     height: 800px;
