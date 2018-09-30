@@ -36,7 +36,7 @@ class App extends React.Component {
     return page.current.getVisibleSections().map((section, i) => {
       return {
         val: '0'+ (i+1),
-        sectionid: section.current.props.id
+        identifier: section.current.props.id
       }
     })
   }
@@ -76,7 +76,7 @@ class App extends React.Component {
         <Switcher ref={this.switcher}
         className="switcher"
         clickCb={this.switcherItemClickCb.bind(this)}
-        items={[{val: '01', sectionid: 'home'}]}></Switcher>
+        items={[{val: '01', identifier: 'home'}]}></Switcher>
         <div className="pages">
           {this.pagesData.map((page) => {
             return (
