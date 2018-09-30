@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 function getViewportHeight() {
   return window.innerHeight && document.documentElement.clientHeight ?
     Math.min(window.innerHeight, document.documentElement.clientHeight) :

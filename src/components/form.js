@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 class InputForm extends React.Component {
   constructor(props) {
     super(props)

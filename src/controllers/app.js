@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+// a
 import {Switcher} from '../components/switcher.js'
 import {Page} from './page.js'
 // import {Page} from './components/page.js'

@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 /**
   @param {array} props.items array of items, each of the format:
     @param {string} props.items[n].innerText
