@@ -13,63 +13,111 @@ class App extends React.Component {
     super(props)
 
     this.pages = {}
-    this.pagesData = this.props.pages.map((page) => {
+    this.props.pages.forEach(page => {
       this.pages[page.id] = React.createRef()
-
-      page.sections = page.sections.map((section) => {
-
-        return {
-          id: section.id,
-          content: (ref, sections) => {
-            return section.content(ref, sections, {
-              onToggleVisib: this.sectionToggleVisibilityCb.bind(this),
-              inViewCb: this.sectionEnterCb.bind(this),
-            })
-          }
-        }
-      })
-
-      return page
     })
+    // this.pagesData = this.props.pages.map((page) => {
+    //   this.pages[page.id] = React.createRef()
+    //
+    //   page.sections = page.sections.map((section) => {
+    //
+    //     return {
+    //       id: section.id,
+    //       content: (ref, sections) => {
+    //         return section.content(ref, sections, {
+    //           onToggleVisib: this.slideToggleVisibilityCb.bind(this),
+    //           inViewCb: this.slideEnterCb.bind(this),
+    //         })
+    //       }
+    //     }
+    //   })
+    //
+    //   return page
+    // })
+
+    this.unwrapPages(this.props.pages)
+    this.currentPageId = 'home'
 
     this.switcher = React.createRef()
   }
 
-  createSwitcherItems(page) {
-    return page.current.getVisibleSections().map((section, i) => {
+  createSwitcherItems(slides) {
+    return slides.map((slide, i) => {
       return {
         val: '0'+ (i+1),
-        identifier: section.current.props.id
+        identifier: slide.current.props.id
       }
     })
   }
-
-  updateSwitcher(page) {
-    console.log("items", this.createSwitcherItems(page))
-    this.switcher.current.setItems(this.createSwitcherItems(page))
-    window.setTimeout(() => {
-      console.log(this.sectionCurrentId)
-      this.switcher.current.switchTo(this.sectionCurrentId)
-    }, 30)
-  }
+  //
+  // updateSwitcher(page) {
+  //   console.log("items", this.createSwitcherItems(page))
+  //   this.switcher.current.setItems(this.createSwitcherItems(page))
+  //   window.setTimeout(() => {
+  //     console.log(this.sectionCurrentId)
+  //     this.switcher.current.switchTo(this.sectionCurrentId)
+  //   }, 30)
+  // }
 
   switcherItemClickCb(sectionId, ev) {
     this.switcher.current.switchTo(sectionId)
     window.location.hash = sectionId
   }
 
-  sectionEnterCb(sectionId) {
-    this.switcher.current.switchTo(sectionId)
-    this.sectionCurrentId = sectionId
+  pageDidMount(pageId) {
+    this.currentPageId = pageId
+
+    if (this.didMount) {
+      const switcherItems = this.createSwitcherItems(this.pages[this.currentPageId].current.getVisibleSlides())
+      this.switcher.current.setItems(switcherItems)
+      this.switcher.current.switchTo(this.pages[this.currentPageId].current.getActiveSlide().current.props.id)
+    }
   }
 
-  sectionToggleVisibilityCb(sectionId) {
-    this.updateSwitcher(this.pages.home)
+  pageWillUnmount() {
+
+  }
+
+  slideEnterCb(slideId) {
+    this.switcher.current.switchTo(slideId)
+    this.slideCurrentId = slideId
+  }
+
+  slideToggleVisibilityCb(slideId) {
+    const switcherItems = this.createSwitcherItems(this.pages[this.currentPageId].current.getVisibleSlides())
+    this.switcher.current.setItems(switcherItems)
+    this.switcher.current.switchTo(this.pages[this.currentPageId].current.getActiveSlide().current.props.id)
+    // this.updateSwitcher(this.pages.home)
+  }
+
+  unwrapPages(pages) {
+    // this.pagesEls = this.pagesData.map((page) => {
+    //   return (
+    //     <Page ref={this.pages[page.id]} key={page.id} id={page.id}
+    //     sections={page.sections}>
+    //     </Page>
+    //   )
+    // })
+
+    this.pagesEls = this.props.pages.map(page => {
+      return page.content(this.pages[page.id], this.pages, {
+        slideInViewCb: this.slideEnterCb.bind(this),
+        slideOnToggleVisib: this.slideToggleVisibilityCb.bind(this),
+        pageDidMount: this.pageDidMount.bind(this),
+        pageWillUnmount: this.pageWillUnmount.bind(this),
+      })
+    })
   }
 
   componentDidMount() {
-    this.sectionCurrentId = this.pages.home.current.sections['home'].current.props.id
-    this.updateSwitcher(this.pages.home)
+    this.didMount = true
+    // this.sectionCurrentId = this.pages.home.current.sections['home'].current.props.id
+    const switcherItems = this.createSwitcherItems(this.pages[this.currentPageId].current.getVisibleSlides())
+    this.switcher.current.setItems(switcherItems)
+    window.setTimeout(() => {
+      this.switcher.current.switchTo(this.pages[this.currentPageId].current.getActiveSlide().current.props.id)
+    }, 35)
+    // this.updateSwitcher(this.pages.home)
 
   }
 
@@ -81,13 +129,7 @@ class App extends React.Component {
         clickCb={this.switcherItemClickCb.bind(this)}
         items={[{val: '01', identifier: 'home'}]}></Switcher>
         <div className="pages">
-          {this.pagesData.map((page) => {
-            return (
-              <Page ref={this.pages[page.id]} key={page.id} id={page.id}
-              sections={page.sections}>
-              </Page>
-            )
-          })}
+          {this.pagesEls}
         </div>
       </div>
     )

@@ -1,21 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-function getViewportHeight() {
-  return window.innerHeight && document.documentElement.clientHeight ?
-    Math.min(window.innerHeight, document.documentElement.clientHeight) :
-    window.innerHeight || document.documentElement.clientHeight
-      || (document.querySelector('body').clientHeight || document.getElementsByTagName('body')[0].clientHeight);
-}
-
-function getViewportWidth() {
-  return window.innerWidth && document.documentElement.clientWidth ?
-    Math.min(window.innerWidth, document.documentElement.clientWidth) :
-    window.innerWidth || document.documentElement.clientWidth
-      || (document.querySelector('body').clientWidth || document.getElementsByTagName('body')[0].clientWidth);
-
-}
-
 class Section extends React.Component {
   /**
     @param {string} id
@@ -27,74 +12,104 @@ class Section extends React.Component {
     super(props)
 
     this.visible = props.visible
-    this.dom = React.createRef()
 
-    // we'll use this to determine if section is in the viewport
-    this.vH = getViewportHeight()
-    this.inViewPrev = false
-
-    window.addEventListener('resize', () => {
-      this.vH = getViewportHeight()
+    this.slides = {}
+    this.props.slides.forEach(slide => {
+      this.slides[slide.id] = React.createRef()
     })
 
-    window.addEventListener('scroll', () => {
-      if (!this.visible)
-        return
-
-      const inView = this.isInView()
-      if (this.inViewPrev != inView) {
-        if (inView)
-          this.props.inViewCb(this.props.id)
-      }
-    })
+    this.unwrapSlides(this.props.slides)
 
     // this.state = {}
     // this.state.visible = props.visible
 
   }
 
-  show() {
-    this.dom.current.classList.remove("noned")
-    this.visible = true
-    this.props.onToggleVisib(this.props.id)
-  }
-
-  hide() {
-    this.dom.current.classList.add("noned")
-    this.visible = false
-    this.props.onToggleVisib(this.props.id)
-  }
-
-  isInView() {
-    const rect = this.dom.current.getBoundingClientRect()
-
-    return (
-      rect.top >= Math.round((this.vH/3)*-1) &&
-      rect.top <= Math.round(this.vH/3)
-      // rect.left >= 0 &&
-      // rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-      // rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-    )
-  }
-
   isVisible() {
     return this.visible
   }
 
-  componentDidMount() {
+  getVisibleSlides() {
+    const slidesVisible = []
 
+    Object.keys(this.slides).forEach(key => {
+      const slide = this.slides[key]
+      if (slide.current.visible)
+        slidesVisible.push(slide)
+    })
+
+    // console.log('page, getVisibleSections, slidesVisible:', slidesVisible)
+    return slidesVisible
+  }
+
+  getActiveSlide() {
+    // return a slide or null if no slide is active
+    // or, maybe instead of having none of the slides active
+    // we should have unactive section!! If section isnt active,
+    // then no need to see if slides in it are active
+
+    const slideKeys = Object.keys(this.slides)
+    for (var i = 0; i < slideKeys.length; i++) {
+      const slide = this.slides[slideKeys[i]]
+
+      if (slide.current.active) {
+        return slide
+      }
+    }
+  }
+
+  setActiveSlide(slideId) {
+    // only one slide can be active at a time
+
+    const activeSlide = this.getActiveSlide()
+    if (activeSlide && activeSlide.current.props.id == slideId)
+      return
+
+    const slideKeys = Object.keys(this.slides)
+    for (var i = 0; i < slideKeys.length; i++) {
+      const slide = this.slides[slideKeys[i]]
+
+      if (slide.current.props.id == slideId) {
+        if (activeSlide)
+          activeSlide.current.deactivate()
+
+        slide.current.activate()
+        return
+      }
+      // slide.setActiveSlide(slideId)
+    }
+  }
+
+  unwrapSlides(slides) {
+    this.slidesEls = this.props.slides.map(slide => {
+      // console.log('page.render, section', section)
+      return slide.content(this.slides[slide.id], this.slides)
+    })
+  }
+
+  activate() {
+    this.active = true
+  }
+
+  deactivate() {
+    this.active = false
+  }
+
+  componentDidMount() {
+    this.setActiveSlide(this.props.slides[0].id)
+  }
+
+  componentWillUnmount() {
+    console.log('section will unmount')
   }
 
   render() {
-    const className = (this.visible) ? 'content-section' : 'content-section noned'
+    const className = (true/*this.visible*/) ? 'content-section' : 'content-section noned'
 
     return (
-      <section
-        ref={this.dom}
-        id={this.props.id}
-        className={className} >
-        {this.props.children}
-      </section>
+      <div className={className}>
+        {this.slidesEls}
+      </div>
     )
   }
 }
