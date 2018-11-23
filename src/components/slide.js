@@ -1,3 +1,5 @@
+import React from 'react'
+
 function getViewportHeight() {
   return window.innerHeight && document.documentElement.clientHeight ?
     Math.min(window.innerHeight, document.documentElement.clientHeight) :
@@ -5,8 +7,10 @@ function getViewportHeight() {
       || (document.querySelector('body').clientHeight || document.getElementsByTagName('body')[0].clientHeight);
 }
 
-class Slide {
-  constructor() {
+class Slide extends React.Component {
+  constructor(options) {
+    super()
+
     // we'll use this to determine if section is in the viewport
     this.vH = getViewportHeight()
     this.inViewPrev = false
@@ -40,8 +44,12 @@ class Slide {
   }
 
   render() {
-    <div>
+    return (
+      <div id={this.props.id}>
       {this.props.children}
-    </div>
+      </div>
+    )
   }
 }
+
+export {Slide}
