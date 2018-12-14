@@ -47,22 +47,61 @@ class SlotUse extends React.Component {
       slideIdsCompound = slideIdsCompound.concat(val)
     }
 
-    this.props.onSlideIdsUpdate(slideIdsCompound)
+    this.props.onSlideIdsUpdate(slideIdsCompound, this.props.id) // the id is there in the case of nested usage (see the NestedSlotUse)
     // this.slotUpdateCb(joinIds(this.slots))
   }
 
   render() {
     return (
-      <section className={'info'}>
-        <Slot id={'info'} onUpdate={}>
+      <div className={'info-container'}>
+        <Slot id={'info'} onUpdate={this.onSlotUpdate}>
           <Slide></Slide>
           <Slide></Slide>
           <Slide></Slide>
         </Slot>
+      </div>
+
+      <div className={'engagement-container'}>
+        <Slot id={'engagement'} onUpdate={this.onSlotUpdate}>
+          <Slide></Slide>
+          <Slide></Slide>
+          <Slide></Slide>
+        </Slot>
+      </div>
+    )
+  }
+}
+
+class NestedSlotUse extends React.Component {
+
+  constructor() {
+    this.slots = {
+      infoAndEngagement: [],
+      contactUs: []
+    }
+  }
+
+  onSlotUpdate(slideIds, slotId) {
+    this.slots[slotId] = slideIds
+
+    let slideIdsCompound = []
+
+    for ([slotId, slideIds] in this.slots) {
+      slideIdsCompound = slideIdsCompound.concat(val)
+    }
+
+    this.props.onSlideIdsUpdate(slideIdsCompound, this.props.id || null)
+    // this.slotUpdateCb(joinIds(this.slots))
+  }
+
+  render() {
+    return (
+      <section className={'info-engagement'}>
+        <SlotUse id={'infoAndEngagement'} onSlideIdsUpdate={this.onSlotUpdate} />
       </section>
 
-      <section className={'engagement'}>
-        <Slot id={'engagement'} onUpdate={}>
+      <section className={'some-other-section'}>
+        <Slot id={'contactUs'} onUpdate={this.onSlotUpdate}>
           <Slide></Slide>
           <Slide></Slide>
           <Slide></Slide>
@@ -75,7 +114,8 @@ class SlotUse extends React.Component {
 class Root extends React.Component {
   constructor() {
     this.slider = React.createRef()
-    this.slideIds = []
+    // this.slideIds = []
+
   }
 
   onSlideIdsUpdate(slideIds) {
@@ -88,7 +128,8 @@ class Root extends React.Component {
       slideIds={this.slideIds}
       ></Slider>
 
-      <SlotUse onSlideIdsUpdate={this.onSlideIdsUpdate} />
+      {/* <SlotUse onSlideIdsUpdate={/* this.onSlideIdsUpdate */} /> */}
+      <NestedSlotUse onSlideIdsUpdate={this.onSlideIdsUpdate} />
     </div>
   }
 }
@@ -126,4 +167,65 @@ class Use extends eact.Component {
     )
   }
 }
+*/
+
+
+
+/*
+  or, instead of defining the onSlotUpdate cb, recieve it as a prop
+  from SlotContainer
+
+  class SlotUse extends React.Component {
+    constructor() {
+      this.slots = {
+        info: [],
+        engagement: []
+      }
+    }
+
+    onSlotUpdate(slideIds, slotId) {
+      this.props.onSlideIdsUpdate(this.slots, slideIds, slotId)
+    }
+
+    render() {
+      return (
+        <section className={'info'}>
+          <Slot id={'info'} onUpdate={this.onSlotUpdate}>
+            <Slide></Slide>
+            <Slide></Slide>
+            <Slide></Slide>
+          </Slot>
+        </section>
+
+        <section className={'engagement'}>
+          <Slot id={'engagement'} onUpdate={this.onSlotUpdate}>
+            <Slide></Slide>
+            <Slide></Slide>
+            <Slide></Slide>
+          </Slot>
+        </section>
+      )
+    }
+  }
+
+  function content(updateCb) {
+    <NestedSlotUse id={'section'} onSlideIdsUpdate={updateCb} />
+  }
+
+  class Root extends React.Component {
+    constructor() {
+
+    }
+
+    onSlideIdsUpdate() {
+
+    }
+
+    render() {
+      <SlotContainer
+      onSlideIdsUpdate={this.onSlideIdsUpdate}
+      content={content}
+      >
+    }
+  }
 */

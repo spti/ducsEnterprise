@@ -11,6 +11,8 @@ class Slide extends React.Component {
   constructor(options) {
     super()
 
+    this.dom = React.createRef()
+
     // we'll use this to determine if section is in the viewport
     this.vH = getViewportHeight()
     this.inViewPrev = false
@@ -45,7 +47,7 @@ class Slide extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id}>
+      <div id={this.props.id} onClick={this.props.clickCb} ref={this.dom}>
       {this.props.children}
       </div>
     )
