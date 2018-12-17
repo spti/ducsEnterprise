@@ -71,7 +71,7 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
       //   slideIdsCompound = slideIdsCompound.concat(slots[slotId])
       // }
 
-      var i = 0, len = this.slots.length-1
+      var i = 0, len = this.slots.length
       for (i; i < len; i++) {
         slideIdsCompound = slideIdsCompound.concat(this.slots[i])
       }
@@ -80,7 +80,7 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
     }
 
     onSlotUpdate(slideIds, slotId) {
-
+      console.log('slotContainer, onSlotUpdate');
       const slotIndex = this.slotIds.indexOf(slotId)
       if (slotIndex < 0) throw new Error('SlotContainer.onSlotUpdate: no such slotId as ' + slotId)
 
@@ -95,11 +95,17 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
       const slotIndex = this.slotIds.indexOf(slotId)
       if (slotIndex < 0) throw new Error('SlotContainer.onSlotMount: no such slotId as ' + slotId)
 
+      this.slots[slotIndex] = slideIds
+      this.slots[slotIndex].mounted = true
+
+      console.log('slotContainer.onSlotMount, container id:', id);
+
+
       let slotsMounted = false
 
-      var i = 0, len = this.slots.length-1
+      var i = 0, len = this.slots.length
       for (i; i < len; i++) {
-        if (!this.slots[slotIndex].mounted) {
+        if (!this.slots[i].mounted) {
           slotsMounted = false
           break
         } else {
@@ -107,6 +113,8 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
         }
       }
 
+      console.log('slotContainer.onSlotMount, slots:', [].concat(this.slots));
+      console.log('slotContainer.onSlotMount, slotsMounted:', slotsMounted);
       // for (var slotId in slots) {
       //   // slideIdsCompound = slideIdsCompound.concat(slots[slotId])
       //   if (!slots[slotId].mounted) {

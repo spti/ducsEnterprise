@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 
 // import {sectionsHome} from '../pages/home.js'
 // import {Test} from '../pages/test.js'
-import {Test} from '../components/test-slot04-02.js'
+import {Test} from '../components/test-slot04-03.js'
 
 function test() {
   const container = document.querySelector('main')
