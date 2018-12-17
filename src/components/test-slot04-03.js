@@ -44,7 +44,7 @@ class Slot extends React.Component {
 /**
 @param {React.Component} slot user defined component, containing slots
 */
-function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
+function slotContainer(Slot) {
   return class extends React.Component {
     constructor(props) {
       super(props)
@@ -86,19 +86,19 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
 
       this.slots[slotIndex] = slideIds
 
-      onSlotUpdate(this.getSlideIds(), id || null)
+      this.props.onSlotUpdate(this.getSlideIds(), this.props.id || null)
       // this.slotUpdateCb(joinIds(this.))
 
     }
 
     onSlotMount(slideIds, slotId) {
       const slotIndex = this.slotIds.indexOf(slotId)
-      if (slotIndex < 0) throw new Error('SlotContainer.onSlotMount: no such slotId as ' + slotId)
+      if (slotIndex < 0) throw new Error('SlotContainer.onSlotMount: no such slotId as ' + slotId + '. If you use the slot or SlotsContainer inside another SlotsContainer, then it must have an id')
 
       this.slots[slotIndex] = slideIds
       this.slots[slotIndex].mounted = true
 
-      console.log('slotContainer.onSlotMount, container id:', id);
+      console.log('slotContainer.onSlotMount, container id:', this.props.id);
 
 
       let slotsMounted = false
@@ -126,7 +126,7 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
       // }
       // console.log('SlotContainer.onSlotMount', slots);
       if (slotsMounted) {
-        onSlotsMount(this.getSlideIds(), id || null)
+        this.props.onSlotsMount(this.getSlideIds(), this.props.id || null)
       }
     }
 
@@ -140,6 +140,31 @@ function slotContainer(Slot, onSlotUpdate, onSlotsMount, id) {
     }
   }
 }
+
+class SlotsContainerWrapper extends React.Component {
+  render() {
+    const Wrapper = slotContainer(this.props.component)
+
+    return (
+      <Wrapper
+        id={this.props.id || null}
+        onSlotsMount={this.props.onSlotsMount}
+        onSlotUpdate={this.props.onSlotUpdate}
+      />
+    )
+  }
+}
+
+/*
+function SlotsContainerWrapperUse() {
+  return (
+    <SlotsContainerWrapper component={NestedSlotUse}
+    onSlotMount={this.onSlidesMount}
+    onSlotUpdate={this.onSlidesUpdate}
+    />
+  )
+}
+*/
 
 class InputResponse extends React.Component {
   constructor(props) {
@@ -174,7 +199,7 @@ class InputResponse extends React.Component {
   }
 }
 
-class SlotUse extends React.Component {
+class Engagement extends React.Component {
   constructor(props) {
     super(props)
     this.props.setSlots(['engagement-intro', 'engagement-interaction'])
@@ -200,26 +225,31 @@ class SlotUse extends React.Component {
   }
 }
 
-class NestedSlotUse extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props)
     this.props.setSlots(['engagement', 'contactUs'])
   }
 
   render() {
-    const SlotUseWrapped = slotContainer(
-      SlotUse, // component
-      this.props.onSlotUpdate, // callbacks
-      this.props.onSlotMount,
-      'engagement', // id
-    )
+    // const EngagementWrapped = slotContainer(
+    //   Engagement, // component
+    //   this.props.onSlotUpdate, // callbacks
+    //   this.props.onSlotMount,
+    //   'engagement', // id
+    // )
+    //  id={'engagement'}
     return (
       <div className={'nested-slot-use'}>
         <section className={'engagement'}>
-        <SlotUseWrapped />
+        <SlotsContainerWrapper id={'engagement'}
+          component={Engagement}
+          onSlotsMount={this.props.onSlotMount}
+          onSlotUpdate={this.props.onSlotUpdate}
+        />
           {
             // slotContainer(
-            //   SlotUse, // component
+            //   Engagement, // component
             //   this.props.onSlotUpdate, // callbacks
             //   this.props.onSlotMount,
             //   'engagement', // id
@@ -281,18 +311,23 @@ class Root extends React.Component {
   }
 
   render() {
-    const Thecontainer = slotContainer(
-      NestedSlotUse,
-      this.onSlidesUpdate.bind(this),
-      this.onSlidesMount.bind(this)
-    )
+    // const Thecontainer = slotContainer(
+    //   Home,
+    //   this.onSlidesUpdate.bind(this),
+    //   this.onSlidesMount.bind(this)
+    // )
     return (
       <div className={'root'}>
         <Slider ref={this.slider} />
-        <Thecontainer />
+
+        <SlotsContainerWrapper
+          component={Home}
+          onSlotsMount={this.onSlidesMount.bind(this)}
+          onSlotUpdate={this.onSlidesUpdate.bind(this)}
+        />
         {
           // slotContainer(
-          //   NestedSlotUse,
+          //   Home,
           //   this.onSlidesUpdate.bind(this),
           //   this.onSlidesMount.bind(this)
           // )
