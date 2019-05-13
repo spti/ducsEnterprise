@@ -217,8 +217,8 @@ class Engagement extends React.Component {
         </Slot>
 
         <InputResponse id={'engagement-interaction'}
-        onSlotUpdate={this.props.onSlotUpdate}
-        onSlotMount={this.props.onSlotMount}
+          onSlotUpdate={this.props.onSlotUpdate}
+          onSlotMount={this.props.onSlotMount}
         />
       </div>
     )
@@ -232,29 +232,14 @@ class Home extends React.Component {
   }
 
   render() {
-    // const EngagementWrapped = slotContainer(
-    //   Engagement, // component
-    //   this.props.onSlotUpdate, // callbacks
-    //   this.props.onSlotMount,
-    //   'engagement', // id
-    // )
-    //  id={'engagement'}
     return (
       <div className={'nested-slot-use'}>
         <section className={'engagement'}>
-        <SlotsContainerWrapper id={'engagement'}
-          component={Engagement}
-          onSlotsMount={this.props.onSlotMount}
-          onSlotUpdate={this.props.onSlotUpdate}
-        />
-          {
-            // slotContainer(
-            //   Engagement, // component
-            //   this.props.onSlotUpdate, // callbacks
-            //   this.props.onSlotMount,
-            //   'engagement', // id
-            // )
-          }
+          <SlotsContainerWrapper id={'engagement'}
+            component={Engagement}
+            onSlotsMount={this.props.onSlotMount}
+            onSlotUpdate={this.props.onSlotUpdate}
+          />
         </section>
 
         <section className={'contact-us'}>
