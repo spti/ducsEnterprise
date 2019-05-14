@@ -47,7 +47,8 @@ class Slide extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} onClick={this.props.clickCb} ref={this.dom}>
+      <div id={this.props.id} className={this.props.className}
+        onClick={this.props.clickCb} ref={this.dom}>
       {this.props.children}
       </div>
     )

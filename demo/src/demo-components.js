@@ -19,7 +19,7 @@ class InputResponse extends React.Component {
       onUpdate={this.props.onSlotUpdate}
       onMount={this.props.onSlotMount}
       >
-        <Slide id={'info-input'}
+        <Slide id={'info-input'} className={'card-block'}
         clickCb={this.respond.bind(this)}
         >
         {'info, input'}
@@ -27,7 +27,8 @@ class InputResponse extends React.Component {
 
         {
           this.state.response ?
-          <Slide id={'info-response'}>{'info, response'}</Slide>
+          <Slide id={'info-response'} className={'card-block'}
+          >{'info, response'}</Slide>
           :
           null
         }
@@ -44,13 +45,13 @@ class Engagement extends React.Component {
 
   render() {
     return (
-      <div className={'engagement'}>
+      <div className={'card-section'}> // className={'engagement'}
         <Slot id={'engagement-intro'}
         onUpdate={this.props.onSlotUpdate}
         onMount={this.props.onSlotMount}
         >
-          <Slide id={'engagement-intro-1'}>{'engagement-intro-1'}</Slide>
-          <Slide id={'engagement-intro-2'}>{'engagement-intro-2'}</Slide>
+          <Slide id={'engagement-intro-1'} className={'card-block'}>{'engagement-intro-1'}</Slide>
+          <Slide id={'engagement-intro-2'} className={'card-block'}>{'engagement-intro-2'}</Slide>
         </Slot>
 
         <InputResponse id={'engagement-interaction'}
@@ -84,8 +85,8 @@ class Home extends React.Component {
           onUpdate={this.props.onSlotUpdate}
           onMount={this.props.onSlotMount}
           >
-            <Slide id={'contact-us-input'}>{'contact-us-input'}</Slide>
-            <Slide id={'contact-us-process'}>{'contact-us-process'}</Slide>
+            <Slide id={'contact-us-input'} className={'card-block'}>{'contact-us-input'}</Slide>
+            <Slide id={'contact-us-process'} className={'card-block'}>{'contact-us-process'}</Slide>
           </Slot>
         </section>
       </div>
@@ -106,12 +107,14 @@ class Slider extends React.Component {
 
   render() {
     return (
-      <div className={'slider'}>
-      {
-        this.state.slides.map((slide, i) => {
-          return <span key={slide}>{slide}</span>
-        })
-      }
+      <div className={'slider-container'}>
+        <div className={'slider'}>
+        {
+          this.state.slides.map((slide, i) => {
+            return <span data-slideId={slide} className={'slider-item'} key={slide}></span>
+          })
+        }
+        </div>
       </div>
     )
   }
