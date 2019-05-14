@@ -1,0 +1,27 @@
+body {
+}
+
+.card-section,
+.card-block,
+.card-detail {
+  background-color: rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+.card-section {
+
+}
+
+.card-block {
+  min-height: 100px;
+  max-height: 350px;
+}
+
+.card-block .expanded {
+
+}
+
+.card-detail {
+  height: 50px;
+}

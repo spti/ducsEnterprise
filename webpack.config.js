@@ -2,12 +2,12 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    index: './src/index.js',
-    test: './src/test.js'
+    index: './demo/src/demo-index.js',
+    // test: './src/test.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dist/'),
-    filename: '[name].js'// 'index.js'
+    path: path.resolve(__dirname, 'demo/dist/'),
+    filename: 'demo-[name].js'// 'index.js'
   },
   mode: "development",
   devtool: 'inline-source-map',

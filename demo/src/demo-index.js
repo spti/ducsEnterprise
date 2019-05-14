@@ -1,16 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-// import {App} from './app.js'
+import {Root} from './demo-components.js'
 
-// import {sectionsHome} from '../pages/home.js'
-import {Home} from '../pages/home.js'
-
-
-function main() {
+function run() {
   const container = document.querySelector('main')
   // ReactDOM.render(<App pages={[{id: 'home', sections: sectionsHome}]}/>, container)
-  ReactDOM.render(<Home />, container)
+  ReactDOM.render(<Root />, container)
 }
 
-export {main}
+window.addEventListener('load', run)
