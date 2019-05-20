@@ -24,13 +24,40 @@ class Slot extends React.Component {
     return slideIds
   }
 
+  onSlideInView(slideId) {
+    // const slideIds = this.getSlideIds()
+    // const activeIndex = slideIds.indexOf(slideId)
+    // if (activeIndex < 0) throw new Error("fatal error: slot doesn't contain the active slide id")
+    //
+    // const slides = slideIds.map((slideId, i) => {return {active: i == activeIndex, id: slideId}})
+
+    // const slideIds = this.getSlideIds()
+    // actually, this is wrong: the currently active id must be kept at the topmost level,
+    // because otherwise there will be multiple activeIds across multiple slots
+    // this.activeId = slideId
+
+    // we want to pass the id of the currently active slide to our callbacks. But
+    // instead of passing the id itself, we pass it's index in the array of the slides
+    // in this slot (because otherwise we' have to look for it in the totality of slide ids
+    // of all slots, in the slotContainer component)
+    // const activeIndex = slideIds.indexOf(this.activeId)
+    this.props.onSlideInView(slideId, this.props.id)
+  }
+
   componentDidUpdate() {
     console.log('Slot.getSlideIds:', this.getSlideIds())
-    this.props.onUpdate(this.getSlideIds(), this.props.id)
+
+    const slideIds = this.getSlideIds()
+    // const activeIndex = slideIds.indexOf(this.activeId)
+
+    this.props.onUpdate(slideIds, this.props.id)
   }
 
   componentDidMount() {
-    this.props.onMount(this.getSlideIds(), this.props.id)
+    const slideIds = this.getSlideIds()
+    // const activeIndex = slideIds.indexOf(this.activeId)
+
+    this.props.onMount(slideIds, this.props.id)
   }
 
   render() {
@@ -91,13 +118,14 @@ function slotContainer(Slot) {
     }
 
     onSlotMount(slideIds, slotId) {
+      console.log('slotContainer.onSlotMount, slotId:', slotId);
+      console.log('slotContainer.onSlotMount, container id:', this.props.id);
       const slotIndex = this.slotIds.indexOf(slotId)
       if (slotIndex < 0) throw new Error('SlotContainer.onSlotMount: no such slotId as ' + slotId + '. If you use the slot or SlotsContainer inside another SlotsContainer, then it must have an id')
 
       this.slots[slotIndex] = slideIds
       this.slots[slotIndex].mounted = true
 
-      console.log('slotContainer.onSlotMount, container id:', this.props.id);
 
 
       let slotsMounted = false
@@ -129,12 +157,22 @@ function slotContainer(Slot) {
       }
     }
 
+    onSlideInView(slideId, slotId) {
+      const slotIndex = this.slotIds.indexOf(slotId)
+      if (slotIndex < 0) throw new Error('SlotContainer.onSlotUpdate: no such slotId as ' + slotId)
+
+      // this.slots[slotIndex] = slideIds
+
+      this.props.onSlideInView(slideId, this.props.id || null)
+    }
+
     render() {
       return (
         <Slot
         setSlots={this.setSlots.bind(this)}
         onSlotMount={this.onSlotMount.bind(this)}
-        onSlotUpdate={this.onSlotUpdate.bind(this)}/>
+        onSlotUpdate={this.onSlotUpdate.bind(this)}
+        onSlideInView={this.props.onSlideInView}/>
       )
     }
   }
@@ -149,6 +187,59 @@ class SlotsContainerWrapper extends React.Component {
         id={this.props.id || null}
         onSlotsMount={this.props.onSlotsMount}
         onSlotUpdate={this.props.onSlotUpdate}
+        onSlideInView={this.props.onSlideInView}
+      />
+    )
+  }
+}
+
+class RootSlot extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.activeSlideId = null
+    this.slides = []
+    this.slideIds = []
+  }
+
+  onSlotsMount(slideIds) {
+    this.setSlides(slideIds)
+    this.props.onSlotsMount(this.slides)
+  }
+
+  onSlotUpdate(slideIds) {
+    this.setSlides(slideIds)
+    this.props.onSlotUpdate(this.slides)
+  }
+
+  onSlideInView(slideId) {
+    this.setActiveSlide(slideId)
+    this.props.onSlideInView(this.slides)
+  }
+
+  setSlides(slideIds) {
+    this.slideIds = slideIds
+    this.slides = this.slideIds.map((id) => {
+      return {id: id, active: this.activeSlideId === id || false}
+    })
+  }
+
+  setActiveSlide(slideId) {
+    this.slides = this.slides.map((slide) => {
+      return {id: slide.id, active: slideId === slide.id || false}
+    })
+
+    this.activeSlideId = slideId
+  }
+
+  render() {
+    const UserSlot = slotContainer(this.props.component)
+    return (
+      <UserSlot
+        id={this.props.id || null}
+        onSlotsMount={this.onSlotsMount.bind(this)}
+        onSlotUpdate={this.onSlotUpdate.bind(this)}
+        onSlideInView={this.onSlideInView.bind(this)}
       />
     )
   }
@@ -165,4 +256,4 @@ function SlotsContainerWrapperUse() {
 }
 */
 
-export {Slot, slotContainer, SlotsContainerWrapper}
+export {Slot, slotContainer, SlotsContainerWrapper, RootSlot}

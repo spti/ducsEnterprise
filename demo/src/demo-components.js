@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Slide} from '../../src/slide.js'
-import {Slot, slotContainer, SlotsContainerWrapper} from '../../src/slots-core.js'
+import {Slot, slotContainer, SlotsContainerWrapper, RootSlot} from '../../src/slots-core.js'
 
 class InputResponse extends React.Component {
   constructor(props) {
@@ -20,7 +20,8 @@ class InputResponse extends React.Component {
       onMount={this.props.onSlotMount}
       >
         <Slide id={'info-input'} className={'card-block'}
-        clickCb={this.respond.bind(this)}
+          clickCb={this.respond.bind(this)}
+          inViewCb={this.props.onSlideInView.bind(this)}
         >
         {'info, input'}
         </Slide>
@@ -28,6 +29,7 @@ class InputResponse extends React.Component {
         {
           this.state.response ?
           <Slide id={'info-response'} className={'card-block'}
+            inViewCb={this.props.onSlideInView.bind(this)}
           >{'info, response'}</Slide>
           :
           null
@@ -50,13 +52,18 @@ class Engagement extends React.Component {
         onUpdate={this.props.onSlotUpdate}
         onMount={this.props.onSlotMount}
         >
-          <Slide id={'engagement-intro-1'} className={'card-block'}>{'engagement-intro-1'}</Slide>
-          <Slide id={'engagement-intro-2'} className={'card-block'}>{'engagement-intro-2'}</Slide>
+          <Slide id={'engagement-intro-1'} className={'card-block'}
+            inViewCb={this.props.onSlideInView}
+          >{'engagement-intro-1'}</Slide>
+          <Slide id={'engagement-intro-2'} className={'card-block'}
+            inViewCb={this.props.onSlideInView}
+          >{'engagement-intro-2'}</Slide>
         </Slot>
 
         <InputResponse id={'engagement-interaction'}
           onSlotUpdate={this.props.onSlotUpdate}
           onSlotMount={this.props.onSlotMount}
+          onSlideInView={this.props.onSlideInView}
         />
       </div>
     )
@@ -77,6 +84,7 @@ class Home extends React.Component {
             component={Engagement}
             onSlotsMount={this.props.onSlotMount}
             onSlotUpdate={this.props.onSlotUpdate}
+            onSlideInView={this.props.onSlideInView}
           />
         </section>
 
@@ -85,8 +93,12 @@ class Home extends React.Component {
           onUpdate={this.props.onSlotUpdate}
           onMount={this.props.onSlotMount}
           >
-            <Slide id={'contact-us-input'} className={'card-block'}>{'contact-us-input'}</Slide>
-            <Slide id={'contact-us-process'} className={'card-block'}>{'contact-us-process'}</Slide>
+            <Slide id={'contact-us-input'} className={'card-block'}
+              inViewCb={this.props.onSlideInView}
+            >{'contact-us-input'}</Slide>
+            <Slide id={'contact-us-process'} className={'card-block'}
+              inViewCb={this.props.onSlideInView}
+            >{'contact-us-process'}</Slide>
           </Slot>
         </section>
       </div>
@@ -100,6 +112,9 @@ class Slider extends React.Component {
     this.state = {slides: []}
   }
 
+  /**
+  @param {[Object]} slides {active: [Boolean], id: [String]}
+  */
   setSlides(slides) {
     console.log('slider.setState, slides: ', slides);
     this.setState({slides: slides})
@@ -111,7 +126,11 @@ class Slider extends React.Component {
         <div className={'slider'}>
         {
           this.state.slides.map((slide, i) => {
-            return <span data-slideId={slide} className={'slider-item'} key={slide}></span>
+            return <span
+              data-slideid={slide.id}
+              className={slide.active ? 'slider-item active' : 'slider-item'}
+              key={slide.id}>
+            </span>
           })
         }
         </div>
@@ -120,6 +139,7 @@ class Slider extends React.Component {
   }
 }
 
+/*
 class Root extends React.Component {
   constructor() {
     super()
@@ -127,12 +147,24 @@ class Root extends React.Component {
   }
 
   onSlidesUpdate(slideIds) {
-    this.slider.current.setSlides(slideIds)
+
+    this.slider.current.setSlides(
+      slideIds.map((slideId) => {
+        return {active: slideId == this.activeSlideId, id: slideId}
+      })
+    )
   }
 
   onSlidesMount(slideIds) {
     console.log('Root.onSlidesMount')
-    this.slider.current.setSlides(slideIds)
+    this.slider.current.setSlides(slideIds.map(slideId => {active: false, id: slideId}))
+  }
+
+  onSlideInView(slideId, slideIds) {
+    this.activeSlideId = slideId
+    this.slider.current.setSlides(slideIds.map((slideId) => {
+      return {active: slideId == this.activeSlideId, id: slideId}
+    }))
   }
 
   render() {
@@ -149,6 +181,56 @@ class Root extends React.Component {
           component={Home}
           onSlotsMount={this.onSlidesMount.bind(this)}
           onSlotUpdate={this.onSlidesUpdate.bind(this)}
+          onSlideInView={this.onSlideInView.bind(this)}
+        />
+        {
+          // slotContainer(
+          //   Home,
+          //   this.onSlidesUpdate.bind(this),
+          //   this.onSlidesMount.bind(this)
+          // )
+        }
+      </div>
+    )
+  }
+}
+*/
+
+class Root extends React.Component {
+  constructor(props) {
+    super(props)
+    this.slider = React.createRef()
+  }
+
+  onSlidesUpdate(slides) {
+    this.slider.current.setSlides(slides)
+  }
+
+  onSlidesMount(slides) {
+    console.log('Root.onSlidesMount')
+    this.slider.current.setSlides(slides)
+  }
+
+  onSlideInView(slides) {
+    this.slider.current.setSlides(slides)
+  }
+
+  render() {
+    // const Thecontainer = slotContainer(
+    //   Home,
+    //   this.onSlidesUpdate.bind(this),
+    //   this.onSlidesMount.bind(this)
+    // )
+    return (
+      <div className={'root'}>
+        <Slider ref={this.slider} />
+
+        <RootSlot
+          component={Home}
+          id={'root'}
+          onSlotsMount={this.onSlidesMount.bind(this)}
+          onSlotUpdate={this.onSlidesUpdate.bind(this)}
+          onSlideInView={this.onSlideInView.bind(this)}
         />
         {
           // slotContainer(

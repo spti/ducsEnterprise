@@ -27,8 +27,9 @@ class Slide extends React.Component {
 
       const inView = this.isInView()
       if (this.inViewPrev != inView) {
-        if (inView)
-          this.props.inViewCb(this.props.id)
+        // console.log('slide, inView changed, inView, slideId:', inView, this.props.id)
+        if (inView) this.props.inViewCb(this.props.id)
+        this.inViewPrev = inView
       }
     })
   }
