@@ -70,7 +70,7 @@ class Slot extends React.Component {
 /**
 @param {React.Component} slot user defined component, containing slots
 */
-function slotContainer(Slot) {
+function slots(Slot) {
   return class extends React.Component {
     constructor(props) {
       super(props)
@@ -178,12 +178,12 @@ function slotContainer(Slot) {
   }
 }
 
-class SlotsContainerWrapper extends React.Component {
+class Slots extends React.Component {
   render() {
-    const Wrapper = slotContainer(this.props.component)
+    const UserSlots = slots(this.props.component)
 
     return (
-      <Wrapper
+      <UserSlots
         id={this.props.id || null}
         onSlotsMount={this.props.onSlotsMount}
         onSlotUpdate={this.props.onSlotUpdate}
@@ -233,9 +233,9 @@ class RootSlot extends React.Component {
   }
 
   render() {
-    const UserSlot = slotContainer(this.props.component)
+    const UserSlots = slots(this.props.component)
     return (
-      <UserSlot
+      <UserSlots
         id={this.props.id || null}
         onSlotsMount={this.onSlotsMount.bind(this)}
         onSlotUpdate={this.onSlotUpdate.bind(this)}
@@ -256,4 +256,4 @@ function SlotsContainerWrapperUse() {
 }
 */
 
-export {Slot, slotContainer, SlotsContainerWrapper, RootSlot}
+export {Slot, slots, Slots, RootSlot}

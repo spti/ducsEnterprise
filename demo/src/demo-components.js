@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Slide} from '../../src/slide.js'
-import {Slot, slotContainer, SlotsContainerWrapper, RootSlot} from '../../src/slots-core.js'
+import {Slot, slots, Slots, RootSlot} from '../../src/slots-core.js'
 
 class InputResponse extends React.Component {
   constructor(props) {
@@ -80,7 +80,7 @@ class Home extends React.Component {
     return (
       <div className={'nested-slot-use'}>
         <section className={'engagement'}>
-          <SlotsContainerWrapper id={'engagement'}
+          <Slots id={'engagement'}
             component={Engagement}
             onSlotsMount={this.props.onSlotMount}
             onSlotUpdate={this.props.onSlotUpdate}
