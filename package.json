@@ -4,7 +4,7 @@
   "description": "",
   "main": "component.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js && gulp build"
+    "demo:build": "webpack --config webpack.config.js && gulp demo:build"
   },
   "repository": {
     "type": "git",
