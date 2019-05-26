@@ -38,4 +38,5 @@ function demoCopy(done) {
 module.exports.watch = function() {
   gulp.watch(['./demo/src/*.scss', './demo/src/*.html'], gulp.series(demoSass, demoCopy))
 }
-// module.exports.build = gulp.series(srcSass, srcCopy)
+
+module.exports['demo:build'] = gulp.series(demoSass, demoCopy)
