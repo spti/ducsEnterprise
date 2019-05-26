@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom'
 import {Slide} from '../../src/slide.js'
 import {Slot, slots, Slots, RootSlot} from '../../src/slots-core.js'
 
+/*
+  A flat structure, where there's only one Slot, containing Slides.
+  Here, all the Slides will get re-rendered whenever state changes
+*/
 class InputResponse extends React.Component {
   constructor(props) {
     super(props)
@@ -23,7 +27,7 @@ class InputResponse extends React.Component {
           clickCb={this.respond.bind(this)}
           inViewCb={this.props.onSlideInView.bind(this)}
         >
-        {'info, input'}
+        {'info, input (>> Click Me! <<)'}
         </Slide>
 
         {
@@ -39,7 +43,12 @@ class InputResponse extends React.Component {
   }
 }
 
-class Engagement extends React.Component {
+/*
+  Here we have two Slides which we don't want re-rendered each time,
+  but whenever in InputResponse the Slides change, we want to pass all the Slides
+  within the UserEngagement up the tree.
+*/
+class UserEngagement extends React.Component {
   constructor(props) {
     super(props)
     this.props.setSlots(['engagement-intro', 'engagement-interaction'])
@@ -47,17 +56,17 @@ class Engagement extends React.Component {
 
   render() {
     return (
-      <div className={'card-section'}> // className={'engagement'}
+      <div className={'card-section'}>
         <Slot id={'engagement-intro'}
         onUpdate={this.props.onSlotUpdate}
         onMount={this.props.onSlotMount}
         >
           <Slide id={'engagement-intro-1'} className={'card-block'}
             inViewCb={this.props.onSlideInView}
-          >{'engagement-intro-1'}</Slide>
+          >{'user engagement intro 1'}</Slide>
           <Slide id={'engagement-intro-2'} className={'card-block'}
             inViewCb={this.props.onSlideInView}
-          >{'engagement-intro-2'}</Slide>
+          >{'user engagement intro 2'}</Slide>
         </Slot>
 
         <InputResponse id={'engagement-interaction'}
@@ -70,6 +79,9 @@ class Engagement extends React.Component {
   }
 }
 
+/*
+Here we have a similar logic to the UserEngagement.
+*/
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -81,7 +93,7 @@ class Home extends React.Component {
       <div className={'nested-slot-use'}>
         <section className={'engagement'}>
           <Slots id={'engagement'}
-            component={Engagement}
+            component={UserEngagement}
             onSlotsMount={this.props.onSlotMount}
             onSlotUpdate={this.props.onSlotUpdate}
             onSlideInView={this.props.onSlideInView}
