@@ -29,4 +29,4 @@ When there is multiple `Slot`s, we pass them to the `Slots`, which gathers all t
 It passes an array of slides in the form of `{id: string, active: boolean}`, where `active` designates if a slide is currently in view.
 
 ## Usage
-See the demo for a usage example
+See the [demo](https://github.com/spti/ridiculous-slider/blob/master/demo/src/demo-components.js) for a usage example
