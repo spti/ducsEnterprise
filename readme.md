@@ -1,5 +1,6 @@
 # Ridiculous Slider
 **Note:** This is very raw and not finished yet.
+[**Check out the demo**](https://spti.github.io/ridiculous-slider/demo/dist/demo-index.html)
 
 ## Install
 `npm install --save ridiculous-slider || yarn add ridiculous-slider`
@@ -12,6 +13,8 @@
 The demo is at the port `3000`, at `demo/dist/demo-index.html`
 
 ## Overview
+The package consists of a few core components: `Slide`, `Slot`, `Slots` and `RootSlot`. You compose `Slides` in `Slot`s, `Slot`s in `Slots` (and `Slots` in `Slots`) and `Slots` in `RootSlot`. You write controllers that receive certain callbacks in props, use the mentioned components passing the callbacks on to those.
+
 ### Slide
 The main purpose of `Slide` is to track whether it is in view or not. Whenever it gets in view, it fires a callback, passing it's id.
 
