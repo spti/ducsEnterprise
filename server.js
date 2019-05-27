@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 
 const spti = require('./server-lib.js')
-const log = require('./server-clientLog.js')
+// const log = require('./server-clientLog.js')
 
 const http = require('http')
 const serverHttp = http.createServer()
@@ -29,7 +29,7 @@ serverHttp.on('request', (request, response) => {
         request.body = body
         // console.log(request.body)
         if (request.url === "/log") {
-          log.enqueue(request, response)
+          // log.enqueue(request, response)
           // log.logToConsole(request, response)
         }
       })
@@ -38,7 +38,7 @@ serverHttp.on('request', (request, response) => {
     request.urlParsed = new URL(request.url, 'http://localhost:3000/')
 
     if (request.urlParsed.pathname === "/getNewLogs") {
-      log.getNew(request, response)
+      // log.getNew(request, response)
     } else {
       if (request.url == '/' || request.url == '/home') {
         request.url = '/index.html'
