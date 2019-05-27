@@ -2,13 +2,13 @@
 **Note:** This is very raw and not finished yet.
 [**Check out the demo**](https://spti.github.io/ridiculous-slider/demo/dist/demo-index.html)
 
-#### Install
+**Install**
 `npm install --save ridiculous-slider || yarn add ridiculous-slider`
 
-#### Build the demo
+**Build the demo**
 `npm run demo:build || yarn demo:build`
 
-#### Run
+**Run**
 `node server.js`
 The demo is at the port `3000`, at `demo/dist/demo-index.html`
 
